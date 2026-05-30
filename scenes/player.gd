@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export var shot_impact_scene: PackedScene
 
 @onready var head: Node3D = $Head
+@onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
 
 # Camera Movement
@@ -13,10 +14,14 @@ var joystick_vertical_sensitivity := 1.5
 var min_pitch := -1.5
 var max_pitch := 1.5
 
+# Movement
 const SPEED := 5.0
 const FRICTION := 8.0
 const JUMP_VELOCITY = 5.0
 var direction := Vector3.ZERO
+
+# Shooting
+var weapon_damage := 1
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -47,7 +52,6 @@ func _input(event: InputEvent) -> void:
 			var target = check_for_target()
 			if target and target.is_in_group("enemies"):
 				var impact_position = raycast.get_collision_point()
-				impact_position = impact_position
 				hit_enemy(target, impact_position)
 
 func move(delta: float) -> void:
@@ -74,7 +78,14 @@ func check_for_target() -> Object:
 	return raycast.get_collider()
 
 func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3):
+	var random_impact_offset := Vector3(
+	randf_range(-0.2, 0.2),
+	randf_range(-0.2, 0.2),
+	randf_range(-0.2, 0.2)
+	)
+
 	var shot_impact = shot_impact_scene.instantiate()
-	add_child(shot_impact)
-	shot_impact.global_position = impact_position
-	print(enemy)
+	get_tree().root.add_child(shot_impact)
+	shot_impact.global_position = impact_position + random_impact_offset
+	shot_impact.look_at(camera.global_transform.origin)
+	enemy.get_hit(weapon_damage)
