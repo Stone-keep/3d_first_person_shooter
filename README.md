@@ -1,2 +1,2 @@
 # 3d_first_person_shooter
-Building simple 3D first person shooter game to learn Godot
+Learning Godot using this tutorial by Clear Code: https://www.patreon.com/collection/1774617
