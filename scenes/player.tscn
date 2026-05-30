@@ -5,6 +5,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
 [node name="Player" type="CharacterBody3D" unique_id=1309102338]
+collision_mask = 5
 script = ExtResource("1_3vyb7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1631738296]
@@ -13,3 +14,7 @@ shape = SubResource("CapsuleShape3D_u8vuu")
 [node name="Head" type="Node3D" parent="." unique_id=1571573294]
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=125110353]
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=1044261320 groups=["player"]]
+target_position = Vector3(0, 0, -20)
+collision_mask = 5

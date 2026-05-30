@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dsvmctv4la0no"]
+
+[ext_resource type="PackedScene" uid="uid://lde2xq3vq635" path="res://models/enemy-flying.glb" id="1_7p1mj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7p1mj"]
+size = Vector3(0.6326904, 0.57821655, 0.6230469)
+
+[node name="Enemy" type="CharacterBody3D" unique_id=14247012 groups=["enemies"]]
+collision_layer = 4
+collision_mask = 3
+
+[node name="enemy-flying" parent="." unique_id=1094295482 instance=ExtResource("1_7p1mj")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=447405609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.010925293, 0.31425053, -0.013671875)
+shape = SubResource("BoxShape3D_7p1mj")

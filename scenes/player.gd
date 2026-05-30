@@ -1,18 +1,19 @@
 extends CharacterBody3D
 
 @onready var head: Node3D = $Head
+@onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
 
 # Camera Movement
 
-var mouse_sensitivity := 0.004
+var mouse_sensitivity := 0.002
 var joystick_horizontal_sensitivity := 2.5
 var joystick_vertical_sensitivity := 1.5
 var min_pitch := -1.5
 var max_pitch := 1.5
 
 const SPEED := 5.0
-const FRICTION := 5.0
-const JUMP_VELOCITY = 4.5
+const FRICTION := 8.0
+const JUMP_VELOCITY = 5.0
 var direction := Vector3.ZERO
 
 func _ready() -> void:
@@ -21,7 +22,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	get_input(delta)
 	move(delta)
-	jump(delta)
+	jump_and_fall(delta)
 	move_and_slide()
 
 func get_input(delta: float) -> void:
@@ -31,16 +32,19 @@ func get_input(delta: float) -> void:
 	var joystick_dir := Input.get_vector("pan_left", "pan_right", "pan_up", "pan_down")
 	rotate_from_vector(joystick_dir * Vector2(joystick_horizontal_sensitivity, joystick_vertical_sensitivity) * delta)
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	elif event is InputEventMouseButton and event.pressed:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	elif event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_from_vector(event.relative * mouse_sensitivity)
+
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			rotate_from_vector(event.relative * mouse_sensitivity)
+		if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
+			var target = check_for_target()
+			if target and target.is_in_group("enemies"):
+				print(target)
 
 func move(delta: float) -> void:
 	if direction:
@@ -50,7 +54,9 @@ func move(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED * delta * FRICTION)
 		velocity.z = move_toward(velocity.z, 0, SPEED * delta * FRICTION)
 
-func jump(delta: float) -> void:
+func jump_and_fall(delta: float) -> void:
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -59,3 +65,6 @@ func rotate_from_vector(v: Vector2):
 		rotation.y -= v.x
 		head.rotation.x -= v.y
 		head.rotation.x = clamp(head.rotation.x, min_pitch, max_pitch)
+
+func check_for_target() -> Object:
+	return raycast.get_collider()

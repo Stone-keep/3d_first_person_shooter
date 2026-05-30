@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dh8354j8ruqaj"]
 
+[ext_resource type="Texture2D" uid="uid://cfhuo8e7sk3nx" path="res://sprites/crosshair.png" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://connwbqdnwbio" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dsvmctv4la0no" path="res://scenes/enemy.tscn" id="2_yqjtg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8cj0n"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -23,6 +25,30 @@ size = Vector3(10, 1, 20)
 
 [node name="Game" type="Node3D" unique_id=1158255392]
 
+[node name="HUD" type="CanvasLayer" parent="." unique_id=265626944]
+
+[node name="Control" type="Control" parent="HUD" unique_id=708623319]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD/Control" unique_id=5741944]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Control/CenterContainer" unique_id=1280642276]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_lnu2h")
+expand_mode = 4
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1138551987]
 environment = SubResource("Environment_yqjtg")
 
@@ -43,3 +69,6 @@ mesh = SubResource("BoxMesh_8cj0n")
 
 [node name="Player" parent="Characters" unique_id=1309102338 instance=ExtResource("1_uwrxv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8923474, 0)
+
+[node name="Enemy" parent="Characters" unique_id=14247012 instance=ExtResource("2_yqjtg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6500249, -3.744332)
