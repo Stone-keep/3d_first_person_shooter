@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@export var shot_impact_scene: PackedScene
+
 @onready var head: Node3D = $Head
 @onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
 
@@ -44,7 +46,9 @@ func _input(event: InputEvent) -> void:
 		if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
 			var target = check_for_target()
 			if target and target.is_in_group("enemies"):
-				print(target)
+				var impact_position = raycast.get_collision_point()
+				impact_position = impact_position
+				hit_enemy(target, impact_position)
 
 func move(delta: float) -> void:
 	if direction:
@@ -68,3 +72,9 @@ func rotate_from_vector(v: Vector2):
 
 func check_for_target() -> Object:
 	return raycast.get_collider()
+
+func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3):
+	var shot_impact = shot_impact_scene.instantiate()
+	add_child(shot_impact)
+	shot_impact.global_position = impact_position
+	print(enemy)

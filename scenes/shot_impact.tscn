@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://ccgfctouovwlr"]
+
+[ext_resource type="Texture2D" uid="uid://c04y3ddhyt4r4" path="res://sprites/hit.png" id="1_yewxw"]
+[ext_resource type="Script" uid="uid://dcwyvxp8p2oy6" path="res://scenes/shot_impact.gd" id="2_bybs8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bybs8"]
+atlas = ExtResource("1_yewxw")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6viqa"]
+atlas = ExtResource("1_yewxw")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gjmr"]
+atlas = ExtResource("1_yewxw")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84pwx"]
+atlas = ExtResource("1_yewxw")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b20um"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bybs8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6viqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gjmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84pwx")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="ShotImpact" type="AnimatedSprite3D" unique_id=2016628253]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_b20um")
+autoplay = "default"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("2_bybs8")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

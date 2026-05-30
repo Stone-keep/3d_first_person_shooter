@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://connwbqdnwbio"]
 
 [ext_resource type="Script" uid="uid://0q1civdrk0ro" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="PackedScene" uid="uid://ccgfctouovwlr" path="res://scenes/shot_impact.tscn" id="2_g2els"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
 [node name="Player" type="CharacterBody3D" unique_id=1309102338]
 collision_mask = 5
 script = ExtResource("1_3vyb7")
+shot_impact_scene = ExtResource("2_g2els")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1631738296]
 shape = SubResource("CapsuleShape3D_u8vuu")
