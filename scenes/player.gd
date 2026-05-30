@@ -1,24 +1,46 @@
 extends CharacterBody3D
 
-@onready var camera_yaw_pivot: Node3D = $CameraController/CameraYawPivot
+@onready var head: Node3D = $Head
+
+# Camera Movement
+
+var mouse_sensitivity := 0.004
+var joystick_horizontal_sensitivity := 2.5
+var joystick_vertical_sensitivity := 1.5
+var min_pitch := -1.5
+var max_pitch := 1.5
 
 const SPEED := 5.0
 const FRICTION := 5.0
 const JUMP_VELOCITY = 4.5
 var direction := Vector3.ZERO
 
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func _physics_process(delta: float) -> void:
-	get_input()
+	get_input(delta)
 	move(delta)
 	jump(delta)
 	move_and_slide()
 
-func get_input() -> void:
+func get_input(delta: float) -> void:
+	var input_dir := Input.get_vector("left", "right", "forward", "backward")
+	direction = (basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+	var joystick_dir := Input.get_vector("pan_left", "pan_right", "pan_up", "pan_down")
+	rotate_from_vector(joystick_dir * Vector2(joystick_horizontal_sensitivity, joystick_vertical_sensitivity) * delta)
+
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	var input_dir := Input.get_vector("left", "right", "forward", "backward")
-	direction = (camera_yaw_pivot.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("exit"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	elif event is InputEventMouseButton and event.pressed:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	elif event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotate_from_vector(event.relative * mouse_sensitivity)
 
 func move(delta: float) -> void:
 	if direction:
@@ -31,3 +53,9 @@ func move(delta: float) -> void:
 func jump(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
+func rotate_from_vector(v: Vector2):
+	if v.length() > 0:
+		rotation.y -= v.x
+		head.rotation.x -= v.y
+		head.rotation.x = clamp(head.rotation.x, min_pitch, max_pitch)

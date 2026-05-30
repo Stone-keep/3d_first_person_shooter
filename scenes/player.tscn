@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://connwbqdnwbio"]
 
 [ext_resource type="Script" uid="uid://0q1civdrk0ro" path="res://scenes/player.gd" id="1_3vyb7"]
-[ext_resource type="PackedScene" uid="uid://dm5oipxq8xm08" path="res://scenes/camera_controller.tscn" id="2_g2els"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
@@ -11,7 +10,6 @@ script = ExtResource("1_3vyb7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1631738296]
 shape = SubResource("CapsuleShape3D_u8vuu")
 
-[node name="CameraController" parent="." unique_id=832296167 instance=ExtResource("2_g2els")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="Head" type="Node3D" parent="." unique_id=1571573294]
 
-[editable path="CameraController"]
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=125110353]

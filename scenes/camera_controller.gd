@@ -7,7 +7,7 @@ var mouse_sensitivity := 0.004
 var joystick_horizontal_sensitivity := 2.5
 var joystick_vertical_sensitivity := 1.5
 var min_pitch := -1.5
-var max_pitch := 0
+var max_pitch := 1.5
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
