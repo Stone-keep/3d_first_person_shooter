@@ -41,3 +41,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, -0.824, -0.756)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.67579144)
 size = Vector3(3, 3, 3)
 texture_albedo = ExtResource("5_qlg0r")
+
+[node name="EnemyTarget" type="Marker3D" parent="." unique_id=1520732866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.022093, 0)

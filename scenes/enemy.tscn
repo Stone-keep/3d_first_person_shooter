@@ -159,9 +159,10 @@ script = ExtResource("1_md0e3")
 min_flash_size = 0.3
 max_flash_size = 0.45
 number_of_barrels = 2
+rotation_speed = 2.0
 
 [node name="Model" type="Node3D" parent="." unique_id=1094295482]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30381286, 0)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, -0.30381286, 0)
 
 [node name="torso" type="MeshInstance3D" parent="Model" unique_id=945695145]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8047786e-15, 0, -0.02375)

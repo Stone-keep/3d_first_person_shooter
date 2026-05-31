@@ -5,8 +5,8 @@ extends CharacterBody3D
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
-
 @onready var weapons: Node3D = $Head/Camera3D/Weapons
+@onready var enemy_target: Marker3D = $EnemyTarget
 
 # Camera Movement
 
@@ -117,13 +117,6 @@ func shoot() -> void:
 func continuous_shoot() -> void:
 	shoot()
 
-func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, damage: int):
-	var shot_impact = shot_impact_scene.instantiate()
-	get_tree().root.add_child(shot_impact)
-	shot_impact.global_position = impact_position + shot_impact.random_impact_offset
-	shot_impact.look_at(camera.global_transform.origin)
-	enemy.get_hit(damage)
-
 func swap_weapons() -> void:
 	is_swapping_weapons = true
 	current_weapon = posmod(current_weapon + 1, Weapon.size()) as Weapon
@@ -136,3 +129,13 @@ func swap_weapons() -> void:
 
 	await tween.finished
 	is_swapping_weapons = false
+
+func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, hit_damage: int):
+	var shot_impact = shot_impact_scene.instantiate()
+	get_tree().root.add_child(shot_impact)
+	shot_impact.global_position = impact_position + shot_impact.random_impact_offset
+	shot_impact.look_at(camera.global_transform.origin)
+	enemy.get_hit(hit_damage)
+
+func get_hit(hit_damage: int):
+	print("Player hit for: " + str(hit_damage))
