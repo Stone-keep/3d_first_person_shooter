@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cs2wkmr3r38hm"]
+
+[ext_resource type="PackedScene" uid="uid://cqyuu7kpd16q8" path="res://scenes/weapon.tscn" id="1_amirf"]
+[ext_resource type="PackedScene" uid="uid://dd3oln1ucgqpd" path="res://models/dual-shooter.glb" id="2_7wsxr"]
+[ext_resource type="Texture2D" uid="uid://csut3ovk0uh0b" path="res://sprites/nozzle_burst.png" id="3_1krk6"]
+
+[node name="DualShooter" unique_id=2139439353 instance=ExtResource("1_amirf")]
+weapon_name = "DualShooter"
+number_of_barrels = 2
+min_flash_size = 0.3
+max_flash_size = 0.45
+
+[node name="blaster-repeater" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1260464293 instance=ExtResource("2_7wsxr")]
+transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.7, 0, 6.119594e-08, 0, -0.7, 0, 0, 0)
+
+[node name="LeftBarrel" type="Sprite3D" parent="MuzzleFlash" parent_id_path=PackedInt32Array(617317940) index="0" unique_id=1537657992]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.128, 0.312, -0.84)
+texture = ExtResource("3_1krk6")
+
+[node name="RightBarrel" type="Sprite3D" parent="MuzzleFlash" parent_id_path=PackedInt32Array(617317940) index="1" unique_id=1883629090]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.155, 0.312, -0.84)
+texture = ExtResource("3_1krk6")

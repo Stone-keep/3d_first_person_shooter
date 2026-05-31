@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://2c8tk66hjteo"]
+
+[ext_resource type="PackedScene" uid="uid://cqyuu7kpd16q8" path="res://scenes/weapon.tscn" id="1_bam1r"]
+[ext_resource type="PackedScene" uid="uid://b2p7bbkuxf7m" path="res://models/blaster.glb" id="2_5vvm8"]
+[ext_resource type="Texture2D" uid="uid://csut3ovk0uh0b" path="res://sprites/nozzle_burst.png" id="3_2f31d"]
+
+[node name="Blaster" unique_id=2139439353 instance=ExtResource("1_bam1r")]
+weapon_name = "Blaster"
+min_flash_size = 0.4
+max_flash_size = 0.6
+
+[node name="blaster" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1826484222 instance=ExtResource("2_5vvm8")]
+transform = Transform3D(-0.7, 0, -1.0569706e-07, 0, 0.7, 0, 1.0569706e-07, 0, -0.7, 0, 0, 0)
+
+[node name="MainBarrel" type="Sprite3D" parent="MuzzleFlash" parent_id_path=PackedInt32Array(617317940) index="0" unique_id=2104085594]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.31399122, -0.6393251)
+modulate = Color(1.4369954, 0.84969777, 0.30965626, 0.69900006)
+texture = ExtResource("3_2f31d")

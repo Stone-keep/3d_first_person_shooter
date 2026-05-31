@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://0q1civdrk0ro" path="res://scenes/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://ccgfctouovwlr" path="res://scenes/shot_impact.tscn" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://2c8tk66hjteo" path="res://scenes/blaster.tscn" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://cs2wkmr3r38hm" path="res://scenes/dual_shooter.tscn" id="4_dqkch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
+height = 1.8
 
 [node name="Player" type="CharacterBody3D" unique_id=1309102338]
 collision_mask = 5
@@ -11,12 +14,24 @@ script = ExtResource("1_3vyb7")
 shot_impact_scene = ExtResource("2_g2els")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1631738296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_u8vuu")
 
 [node name="Head" type="Node3D" parent="." unique_id=1571573294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=125110353]
+near = 0.002
 
 [node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=1044261320 groups=["player"]]
 target_position = Vector3(0, 0, -20)
 collision_mask = 5
+
+[node name="Weapons" type="Node3D" parent="Head/Camera3D" unique_id=526937640]
+
+[node name="Blaster" parent="Head/Camera3D/Weapons" unique_id=2139439353 instance=ExtResource("3_qhqgy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.965, -0.94, -1)
+visible = false
+
+[node name="DualShooter" parent="Head/Camera3D/Weapons" unique_id=1350484772 instance=ExtResource("4_dqkch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, -0.824, -0.756)

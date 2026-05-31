@@ -6,6 +6,9 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
 
+@onready var blaster: Node3D = $Head/Camera3D/Weapons/Blaster
+@onready var dual_shooter: Node3D = $Head/Camera3D/Weapons/DualShooter
+
 # Camera Movement
 
 var mouse_sensitivity := 0.002
@@ -39,20 +42,16 @@ func get_input(delta: float) -> void:
 	var joystick_dir := Input.get_vector("pan_left", "pan_right", "pan_up", "pan_down")
 	rotate_from_vector(joystick_dir * Vector2(joystick_horizontal_sensitivity, joystick_vertical_sensitivity) * delta)
 
+	if Input.is_action_just_pressed("primary_fire"):
+		shoot()
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	elif event is InputEventMouseButton and event.pressed:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if event is InputEventMouseMotion:
-			rotate_from_vector(event.relative * mouse_sensitivity)
-		if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
-			var target = check_for_target()
-			if target and target.is_in_group("enemies"):
-				var impact_position = raycast.get_collision_point()
-				hit_enemy(target, impact_position)
+	elif event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotate_from_vector(event.relative * mouse_sensitivity)
 
 func move(delta: float) -> void:
 	if direction:
@@ -77,15 +76,16 @@ func rotate_from_vector(v: Vector2):
 func check_for_target() -> Object:
 	return raycast.get_collider()
 
-func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3):
-	var random_impact_offset := Vector3(
-	randf_range(-0.2, 0.2),
-	randf_range(-0.2, 0.2),
-	randf_range(-0.2, 0.2)
-	)
+func shoot() -> void:
+	dual_shooter.muzzle_flash()
+	var target = check_for_target()
+	if target and target.is_in_group("enemies"):
+		var impact_position = raycast.get_collision_point()
+		hit_enemy(target, impact_position)
 
+func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3):
 	var shot_impact = shot_impact_scene.instantiate()
 	get_tree().root.add_child(shot_impact)
-	shot_impact.global_position = impact_position + random_impact_offset
+	shot_impact.global_position = impact_position + shot_impact.random_impact_offset
 	shot_impact.look_at(camera.global_transform.origin)
 	enemy.get_hit(weapon_damage)

@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://csut3ovk0uh0b"
-path.s3tc="res://.godot/imported/nozzle_burst.png-11943f42dd20b2da844fb8d2c0a4bc6c.s3tc.ctex"
+path="res://.godot/imported/nozzle_burst.png-11943f42dd20b2da844fb8d2c0a4bc6c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://sprites/nozzle_burst.png"
-dest_files=["res://.godot/imported/nozzle_burst.png-11943f42dd20b2da844fb8d2c0a4bc6c.s3tc.ctex"]
+dest_files=["res://.godot/imported/nozzle_burst.png-11943f42dd20b2da844fb8d2c0a4bc6c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

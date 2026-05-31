@@ -40,7 +40,8 @@ animations = [{
 }]
 
 [node name="ShotImpact" type="AnimatedSprite3D" unique_id=2016628253]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+modulate = Color(0.91132057, 0.9063318, 0, 1)
 no_depth_test = true
 sprite_frames = SubResource("SpriteFrames_b20um")
 autoplay = "default"
