@@ -95,6 +95,7 @@ func check_for_target() -> Object:
 func shoot() -> void:
 	if not is_swapping_weapons:
 		var weapon = weapons.get_child(current_weapon)
+		weapon.recoil_animation()
 		weapon.muzzle_flash()
 		var target = check_for_target()
 		if target and target.is_in_group("enemies"):

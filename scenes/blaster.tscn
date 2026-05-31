@@ -6,9 +6,11 @@
 
 [node name="Blaster" unique_id=2139439353 instance=ExtResource("1_bam1r")]
 weapon_name = "Blaster"
+damage = 2
 min_flash_size = 0.4
 max_flash_size = 0.6
-damage = 2
+recoil_distance = Vector3(0, 0.05, 0.05)
+recoil_rotation_degrees = 5.0
 
 [node name="blaster" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1826484222 instance=ExtResource("2_5vvm8")]
 transform = Transform3D(-0.7, 0, -1.0569706e-07, 0, 0.7, 0, 1.0569706e-07, 0, -0.7, 0, 0, 0)

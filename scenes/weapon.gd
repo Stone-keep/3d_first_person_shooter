@@ -1,14 +1,20 @@
 extends Node3D
 
 @onready var muzzleflash: Node3D = $MuzzleFlash
+@onready var start_position := position
+@onready var start_rotation := rotation
 
 @export var weapon_name := "Weapon"
+@export var damage: int
 @export var number_of_barrels := 1
 @export var min_flash_size: float
 @export var max_flash_size: float
-@export var damage: int
+@export var recoil_distance: Vector3
+@export var recoil_rotation_degrees: float
 
 var current_barrel := 0
+var is_recoiling := false
+
 
 func _ready() -> void:
 	for sprite in muzzleflash.get_children():
@@ -23,3 +29,20 @@ func muzzle_flash():
 		tween.tween_property(barrel_flash, "scale", Vector3(flash_size, flash_size, flash_size), 0.1).from(Vector3.ZERO)
 		tween.tween_property(barrel_flash, "scale", Vector3.ZERO, 0.2)
 		current_barrel = posmod(current_barrel + 1, number_of_barrels)
+
+func recoil_animation():
+	if not is_recoiling:
+		is_recoiling = true
+		var tween = create_tween()
+		tween.set_parallel(true)
+
+		tween.tween_property(self, "position", start_position + recoil_distance, 0.08)
+		tween.tween_property(self, "rotation", start_rotation + Vector3(deg_to_rad(recoil_rotation_degrees), 0, 0), 0.08)
+		
+		tween.chain()
+
+		tween.tween_property(self, "position", start_position, 0.15)
+		tween.tween_property(self, "rotation", start_rotation, 0.15)
+
+		await tween.finished
+		is_recoiling = false
