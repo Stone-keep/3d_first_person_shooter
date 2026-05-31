@@ -4,10 +4,11 @@ extends CharacterBody3D
 @export var max_flash_size: float
 @export var number_of_barrels := 1
 @export var damage := 1
-@export var rotation_speed := 5.0
+@export var rotation_speed := 10.0
 
 @onready var muzzleflash: Node3D = $Model/MuzzleFlash
-@onready var shoot_timer = $ShootTimer
+@onready var shoot_timer: Timer = $ShootTimer
+@onready var shoot_shape: ShapeCast3D = $ShootZone
 
 var player: CharacterBody3D
 
@@ -18,19 +19,26 @@ func _ready() -> void:
 		sprite.scale = Vector3.ZERO
 		sprite.modulate = Color(0.99, 0.0, 0.05, randf_range(0.6, 0.8))
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if player:
 		var target_dir = (player.enemy_target.global_position - global_position).normalized()
 		var current_dir = -global_transform.basis.z
 		var new_dir = current_dir.slerp(target_dir, rotation_speed * delta).normalized()
-		look_at(global_transform.origin + new_dir)
+		look_at(global_transform.origin + new_dir, Vector3.UP)
+		rotation.z = 0.0
+		rotation.x = clamp(rotation.x, deg_to_rad(-45), deg_to_rad(45))
 
 func get_hit(hit_damage: int):
 	print("Enemy hit for: " + str(hit_damage))
 
 func shoot():
 	muzzle_flash()
-	player.get_hit(damage)
+	shoot_shape.force_shapecast_update()
+	if shoot_shape.is_colliding():
+		var collider := shoot_shape.get_collider(0)
+		
+		if collider.is_in_group("player"):
+			collider.get_hit(damage)
 
 func muzzle_flash():
 	var barrel_flash := muzzleflash.get_child(current_barrel)

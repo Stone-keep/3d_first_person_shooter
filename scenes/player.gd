@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
-@onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
+@onready var shoot_raycast: RayCast3D = $Head/Camera3D/ShootRay
 @onready var weapons: Node3D = $Head/Camera3D/Weapons
 @onready var enemy_target: Marker3D = $EnemyTarget
 
@@ -100,7 +100,7 @@ func rotate_from_vector(v: Vector2):
 		head.rotation.x = clamp(head.rotation.x, min_pitch, max_pitch)
 
 func check_for_target() -> Object:
-	return raycast.get_collider()
+	return shoot_raycast.get_collider()
 
 func shoot() -> void:
 	if is_swapping_weapons or current_weapon_node.is_on_cooldown:
@@ -111,7 +111,7 @@ func shoot() -> void:
 	current_weapon_node.muzzle_flash()
 	var target = check_for_target()
 	if target and target.is_in_group("enemies"):
-		var impact_position = raycast.get_collision_point()
+		var impact_position = shoot_raycast.get_collision_point()
 		hit_enemy(target, impact_position, current_weapon_node.damage)
 
 func continuous_shoot() -> void:

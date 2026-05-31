@@ -150,7 +150,11 @@ shadow_mesh = SubResource("ArrayMesh_28etn")
 size = Vector3(0.6326904, 0.57821655, 0.6230469)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0e3"]
-radius = 5.531
+radius = 5.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ra3w"]
+resource_local_to_scene = true
+size = Vector3(1.2, 0.7, 10)
 
 [node name="Enemy" type="CharacterBody3D" unique_id=14247012 groups=["enemies"]]
 collision_layer = 4
@@ -210,6 +214,12 @@ shape = SubResource("SphereShape3D_md0e3")
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=713235235]
 wait_time = 1.5
+
+[node name="ShootZone" type="ShapeCast3D" parent="." unique_id=1603675326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.261355)
+shape = SubResource("BoxShape3D_4ra3w")
+target_position = Vector3(0, 0, 0)
+collision_mask = 2
 
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_detection_range_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_detection_range_body_exited"]
