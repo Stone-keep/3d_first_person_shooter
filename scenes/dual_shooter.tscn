@@ -9,6 +9,7 @@ weapon_name = "DualShooter"
 number_of_barrels = 2
 min_flash_size = 0.3
 max_flash_size = 0.45
+damage = 1
 
 [node name="blaster-repeater" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1260464293 instance=ExtResource("2_7wsxr")]
 transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.7, 0, 6.119594e-08, 0, -0.7, 0, 0, 0)

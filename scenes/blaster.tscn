@@ -8,6 +8,7 @@
 weapon_name = "Blaster"
 min_flash_size = 0.4
 max_flash_size = 0.6
+damage = 2
 
 [node name="blaster" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1826484222 instance=ExtResource("2_5vvm8")]
 transform = Transform3D(-0.7, 0, -1.0569706e-07, 0, 0.7, 0, 1.0569706e-07, 0, -0.7, 0, 0, 0)

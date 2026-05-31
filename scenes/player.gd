@@ -6,8 +6,7 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Head/Camera3D
 @onready var raycast: RayCast3D = $Head/Camera3D/RayCast3D
 
-@onready var blaster: Node3D = $Head/Camera3D/Weapons/Blaster
-@onready var dual_shooter: Node3D = $Head/Camera3D/Weapons/DualShooter
+@onready var weapons: Node3D = $Head/Camera3D/Weapons
 
 # Camera Movement
 
@@ -23,11 +22,25 @@ const FRICTION := 8.0
 const JUMP_VELOCITY = 5.0
 var direction := Vector3.ZERO
 
-# Shooting
-var weapon_damage := 1
+# Weapons & Shooting
+enum Weapon {BLASTER, DUAL_SHOOTER}
+@onready var weapon_start_position := weapons.position
+var previous_weapon: Weapon = Weapon.BLASTER
+var current_weapon: Weapon:
+	set(value):
+		if current_weapon == value:
+			return
+		previous_weapon = current_weapon
+		current_weapon = value
+		swap_weapons()
+
+var is_swapping_weapons := false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	for weapon in weapons.get_children():
+		weapon.hide()
+	weapons.get_child(current_weapon).show()
 
 func _physics_process(delta: float) -> void:
 	get_input(delta)
@@ -44,6 +57,9 @@ func get_input(delta: float) -> void:
 
 	if Input.is_action_just_pressed("primary_fire"):
 		shoot()
+
+	if Input.is_action_just_pressed("toggle_weapon") and not is_swapping_weapons:
+		current_weapon = posmod(current_weapon + 1, Weapon.size()) as Weapon
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
@@ -77,15 +93,28 @@ func check_for_target() -> Object:
 	return raycast.get_collider()
 
 func shoot() -> void:
-	dual_shooter.muzzle_flash()
-	var target = check_for_target()
-	if target and target.is_in_group("enemies"):
-		var impact_position = raycast.get_collision_point()
-		hit_enemy(target, impact_position)
+	if not is_swapping_weapons:
+		var weapon = weapons.get_child(current_weapon)
+		weapon.muzzle_flash()
+		var target = check_for_target()
+		if target and target.is_in_group("enemies"):
+			var impact_position = raycast.get_collision_point()
+			hit_enemy(target, impact_position, weapon.damage)
 
-func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3):
+func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, damage: int):
 	var shot_impact = shot_impact_scene.instantiate()
 	get_tree().root.add_child(shot_impact)
 	shot_impact.global_position = impact_position + shot_impact.random_impact_offset
 	shot_impact.look_at(camera.global_transform.origin)
-	enemy.get_hit(weapon_damage)
+	enemy.get_hit(damage)
+
+func swap_weapons() -> void:
+	is_swapping_weapons = true
+	var tween = create_tween()
+	tween.tween_property(weapons, "position", weapon_start_position + Vector3(0, -1.2, 0), 0.2)
+	tween.tween_callback(weapons.get_child(current_weapon).show)
+	tween.tween_callback(weapons.get_child(previous_weapon).hide)
+	tween.tween_property(weapons, "position", weapon_start_position, 0.2)
+
+	await tween.finished
+	is_swapping_weapons = false
