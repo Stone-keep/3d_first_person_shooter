@@ -2,14 +2,21 @@
 
 [ext_resource type="PackedScene" uid="uid://lde2xq3vq635" path="res://models/enemy-flying.glb" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://cccqoultfmbad" path="res://scenes/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://csut3ovk0uh0b" path="res://sprites/nozzle_burst.png" id="3_4ra3w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7p1mj"]
 size = Vector3(0.6326904, 0.57821655, 0.6230469)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_md0e3"]
+radius = 5.531
 
 [node name="Enemy" type="CharacterBody3D" unique_id=14247012 groups=["enemies"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_md0e3")
+min_flash_size = 0.25
+max_flash_size = 0.4
+number_of_barrels = 2
 
 [node name="enemy-flying" parent="." unique_id=1094295482 instance=ExtResource("1_7p1mj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30381286, 0)
@@ -17,3 +24,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30381286, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=447405609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.010925293, 0.010437667, -0.013671875)
 shape = SubResource("BoxShape3D_7p1mj")
+
+[node name="DetectionRange" type="Area3D" parent="." unique_id=983748976]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionRange" unique_id=893182317]
+shape = SubResource("SphereShape3D_md0e3")
+
+[node name="MuzzleFlash" type="Node3D" parent="." unique_id=1453200563]
+
+[node name="LeftBarrel" type="Sprite3D" parent="MuzzleFlash" unique_id=1373795667]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.4427426, -0.012791336, 0.44682086)
+texture = ExtResource("3_4ra3w")
+
+[node name="RightBarrel" type="Sprite3D" parent="MuzzleFlash" unique_id=220999989]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.43879175, -0.018963411, 0.44682086)
+texture = ExtResource("3_4ra3w")
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=713235235]
+wait_time = 1.5
+
+[connection signal="body_entered" from="DetectionRange" to="." method="_on_detection_range_body_entered"]
+[connection signal="body_exited" from="DetectionRange" to="." method="_on_detection_range_body_exited"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

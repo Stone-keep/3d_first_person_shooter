@@ -4,11 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://ccgfctouovwlr" path="res://scenes/shot_impact.tscn" id="2_g2els"]
 [ext_resource type="PackedScene" uid="uid://2c8tk66hjteo" path="res://scenes/blaster.tscn" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://cs2wkmr3r38hm" path="res://scenes/dual_shooter.tscn" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://b7pbo2461l5me" path="res://sprites/shadow.webp" id="5_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 height = 1.8
 
-[node name="Player" type="CharacterBody3D" unique_id=1309102338]
+[node name="Player" type="CharacterBody3D" unique_id=1309102338 groups=["player"]]
+collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_3vyb7")
 shot_impact_scene = ExtResource("2_g2els")
@@ -23,7 +25,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=125110353]
 near = 0.002
 
-[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=1044261320 groups=["player"]]
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=1044261320]
 target_position = Vector3(0, 0, -20)
 collision_mask = 5
 
@@ -34,3 +36,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.965, -0.94, -1)
 
 [node name="DualShooter" parent="Head/Camera3D/Weapons" unique_id=1350484772 instance=ExtResource("4_dqkch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, -0.824, -0.756)
+
+[node name="Decal" type="Decal" parent="." unique_id=1108944003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.67579144)
+size = Vector3(3, 3, 3)
+texture_albedo = ExtResource("5_qlg0r")

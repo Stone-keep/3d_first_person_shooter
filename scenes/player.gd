@@ -13,14 +13,18 @@ extends CharacterBody3D
 var mouse_sensitivity := 0.002
 var joystick_horizontal_sensitivity := 2.5
 var joystick_vertical_sensitivity := 1.5
-var min_pitch := -1.5
-var max_pitch := 1.5
+var min_pitch := -1.4
+var max_pitch := 1.4
 
 # Movement
 const SPEED := 5.0
 const FRICTION := 8.0
 const JUMP_VELOCITY = 5.0
 var direction := Vector3.ZERO
+
+# Jumping
+var current_jump := 0
+var max_jumps := 2
 
 # Weapons & Shooting
 enum Weapon {BLASTER, DUAL_SHOOTER}
@@ -78,7 +82,10 @@ func move(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED * delta * FRICTION)
 
 func jump_and_fall(delta: float) -> void:
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if current_jump > 0 and is_on_floor():
+		current_jump = 0
+	if Input.is_action_just_pressed("jump") and current_jump < max_jumps:
+		current_jump += 1
 		velocity.y = JUMP_VELOCITY
 	if not is_on_floor():
 		velocity += get_gravity() * delta
