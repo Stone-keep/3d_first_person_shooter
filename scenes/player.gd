@@ -36,8 +36,7 @@ var current_weapon: Weapon:
 			return
 		previous_weapon = current_weapon
 		current_weapon = value
-		swap_weapons()
-
+var current_weapon_node: Node3D
 var is_swapping_weapons := false
 
 func _ready() -> void:
@@ -45,6 +44,7 @@ func _ready() -> void:
 	for weapon in weapons.get_children():
 		weapon.hide()
 	weapons.get_child(current_weapon).show()
+	current_weapon_node = weapons.get_child(current_weapon)
 
 func _physics_process(delta: float) -> void:
 	get_input(delta)
@@ -59,11 +59,14 @@ func get_input(delta: float) -> void:
 	var joystick_dir := Input.get_vector("pan_left", "pan_right", "pan_up", "pan_down")
 	rotate_from_vector(joystick_dir * Vector2(joystick_horizontal_sensitivity, joystick_vertical_sensitivity) * delta)
 
-	if Input.is_action_just_pressed("primary_fire"):
-		shoot()
-
+	if current_weapon_node.continuous_shooting:
+		if Input.is_action_pressed("primary_fire"):
+			shoot()
+	else:
+		if Input.is_action_just_pressed("primary_fire"):
+			shoot()
 	if Input.is_action_just_pressed("toggle_weapon") and not is_swapping_weapons:
-		current_weapon = posmod(current_weapon + 1, Weapon.size()) as Weapon
+		swap_weapons()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
@@ -100,14 +103,19 @@ func check_for_target() -> Object:
 	return raycast.get_collider()
 
 func shoot() -> void:
-	if not is_swapping_weapons:
-		var weapon = weapons.get_child(current_weapon)
-		weapon.recoil_animation()
-		weapon.muzzle_flash()
-		var target = check_for_target()
-		if target and target.is_in_group("enemies"):
-			var impact_position = raycast.get_collision_point()
-			hit_enemy(target, impact_position, weapon.damage)
+	if is_swapping_weapons or current_weapon_node.is_on_cooldown:
+		return
+	current_weapon_node.is_on_cooldown = true
+	current_weapon_node.cooldown_timer.start()
+	current_weapon_node.recoil_animation()
+	current_weapon_node.muzzle_flash()
+	var target = check_for_target()
+	if target and target.is_in_group("enemies"):
+		var impact_position = raycast.get_collision_point()
+		hit_enemy(target, impact_position, current_weapon_node.damage)
+
+func continuous_shoot() -> void:
+	shoot()
 
 func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, damage: int):
 	var shot_impact = shot_impact_scene.instantiate()
@@ -118,6 +126,8 @@ func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, damage: int):
 
 func swap_weapons() -> void:
 	is_swapping_weapons = true
+	current_weapon = posmod(current_weapon + 1, Weapon.size()) as Weapon
+	current_weapon_node = weapons.get_child(current_weapon)
 	var tween = create_tween()
 	tween.tween_property(weapons, "position", weapon_start_position + Vector3(0, -1.2, 0), 0.2)
 	tween.tween_callback(weapons.get_child(current_weapon).show)

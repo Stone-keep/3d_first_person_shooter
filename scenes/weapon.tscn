@@ -8,3 +8,9 @@ script = ExtResource("1_xasec")
 [node name="WeaponMesh" type="Node3D" parent="." unique_id=761438346]
 
 [node name="MuzzleFlash" type="Node3D" parent="." unique_id=617317940]
+
+[node name="CooldownTimer" type="Timer" parent="." unique_id=1261943736]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
