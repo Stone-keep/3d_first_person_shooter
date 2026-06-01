@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b6xgrd1lew25h"]
+
+[ext_resource type="Script" uid="uid://belap2utr2u3k" path="res://scenes/global.gd" id="1_4pk28"]
+
+[node name="Global" type="Node" unique_id=1911006143]
+script = ExtResource("1_4pk28")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=1243002858]
+volume_db = -10.0
+
+[connection signal="finished" from="BackgroundMusic" to="." method="_on_background_music_finished"]
