@@ -40,7 +40,7 @@ var is_swapping_weapons := false
 
 # Health
 var max_health := 50
-var current_health := max_health
+var current_health: int
 signal health_changed(hp_current: int, hp_max: int)
 
 func _ready() -> void:
@@ -49,6 +49,7 @@ func _ready() -> void:
 		weapon.hide()
 	weapons.get_child(current_weapon).show()
 	current_weapon_node = weapons.get_child(current_weapon)
+	current_health = max_health
 
 func _physics_process(delta: float) -> void:
 	get_input(delta)
@@ -145,3 +146,8 @@ func get_hit(hit_damage: int):
 	current_health -= hit_damage
 	health_changed.emit(current_health, max_health)
 	print("Player hit for: " + str(hit_damage))
+	if current_health <= 0:
+		die()
+
+func die():
+	print("player dead")
