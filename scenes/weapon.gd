@@ -2,10 +2,12 @@ extends Node3D
 
 @onready var muzzleflash: Node3D = $MuzzleFlash
 @onready var cooldown_timer: Timer = $CooldownTimer
+@onready var shoot_sound_player: AudioStreamPlayer = $ShootSound
 @onready var start_position := position
 @onready var start_rotation := rotation
 
 @export var weapon_name := "Weapon"
+@export var shoot_sound: AudioStream
 @export var damage := 1
 @export var cooldown := 0.5
 @export var continuous_shooting := false
@@ -24,6 +26,7 @@ func _ready() -> void:
 		sprite.scale = Vector3.ZERO
 		sprite.modulate = Color(1.437, 0.85, 0.31, randf_range(0.6, 0.8))
 	cooldown_timer.wait_time = cooldown
+	shoot_sound_player.stream = shoot_sound
 	
 func muzzle_flash():
 	var num_barrels := muzzleflash.get_child_count()
@@ -36,6 +39,9 @@ func muzzle_flash():
 	tween.tween_property(barrel_flash, "scale", Vector3(flash_size, flash_size, flash_size), 0.1).from(Vector3.ZERO)
 	tween.tween_property(barrel_flash, "scale", Vector3.ZERO, 0.2)
 	current_barrel = posmod(current_barrel + 1, num_barrels)
+
+func play_shoot_sound():
+	shoot_sound_player.play()
 
 func recoil_animation():
 	if not is_recoiling:

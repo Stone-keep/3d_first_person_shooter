@@ -7,6 +7,7 @@ extends CharacterBody3D
 @onready var shoot_raycast: RayCast3D = $Head/Camera3D/ShootRay
 @onready var weapons: Node3D = $Head/Camera3D/Weapons
 @onready var enemy_target: Marker3D = $EnemyTarget
+@onready var sounds: Node3D = $Sounds
 
 # Camera Movement
 var mouse_sensitivity := 0.002
@@ -16,9 +17,11 @@ var min_pitch := -1.4
 var max_pitch := 1.4
 
 # Movement
-const SPEED := 5.0
+const WALK_SPEED := 3.0
+const RUN_SPEED := 6.0
 const FRICTION := 8.0
 var direction := Vector3.ZERO
+var is_running := false
 
 # Jumping
 const JUMP_VELOCITY = 5.0
@@ -72,6 +75,11 @@ func get_input(delta: float) -> void:
 			shoot()
 	if Input.is_action_just_pressed("toggle_weapon") and not is_swapping_weapons:
 		swap_weapons()
+	
+	if Input.is_action_pressed("run") and !is_running:
+		is_running = true
+	elif Input.is_action_just_released("run"):
+		is_running = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
@@ -82,12 +90,24 @@ func _input(event: InputEvent) -> void:
 		rotate_from_vector(event.relative * mouse_sensitivity)
 
 func move(delta: float) -> void:
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+	if direction and is_running:
+		velocity.x = direction.x * RUN_SPEED
+		velocity.z = direction.z * RUN_SPEED
+		if is_on_floor():
+			sounds.play_run_sound()
+		else:
+			sounds.stop_walk_and_run_sound()
+	elif direction and not is_running:
+		velocity.x = direction.x * WALK_SPEED
+		velocity.z = direction.z * WALK_SPEED
+		if is_on_floor():
+			sounds.play_walk_sound()
+		else:
+			sounds.stop_walk_and_run_sound()
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED * delta * FRICTION)
-		velocity.z = move_toward(velocity.z, 0, SPEED * delta * FRICTION)
+		velocity.x = move_toward(velocity.x, 0, RUN_SPEED * delta * FRICTION)
+		velocity.z = move_toward(velocity.z, 0, RUN_SPEED * delta * FRICTION)
+		sounds.stop_walk_and_run_sound()
 
 func jump_and_fall(delta: float) -> void:
 	if current_jump > 0 and is_on_floor():
@@ -95,6 +115,7 @@ func jump_and_fall(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and current_jump < max_jumps:
 		current_jump += 1
 		velocity.y = JUMP_VELOCITY
+		sounds.play_jump_sound()
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -112,6 +133,7 @@ func shoot() -> void:
 		return
 	current_weapon_node.is_on_cooldown = true
 	current_weapon_node.cooldown_timer.start()
+	current_weapon_node.play_shoot_sound()
 	current_weapon_node.recoil_animation()
 	current_weapon_node.muzzle_flash()
 	var target = check_for_target()
@@ -128,6 +150,7 @@ func swap_weapons() -> void:
 	current_weapon_node = weapons.get_child(current_weapon)
 	var tween = create_tween()
 	tween.tween_property(weapons, "position", weapon_start_position + Vector3(0, -1.2, 0), 0.2)
+	tween.tween_callback(sounds.play_change_weapon_sound)
 	tween.tween_callback(weapons.get_child(current_weapon).show)
 	tween.tween_callback(weapons.get_child(previous_weapon).hide)
 	tween.tween_property(weapons, "position", weapon_start_position, 0.2)

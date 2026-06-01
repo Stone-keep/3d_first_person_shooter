@@ -13,4 +13,6 @@ script = ExtResource("1_xasec")
 wait_time = 0.5
 one_shot = true
 
+[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=1081677558]
+
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

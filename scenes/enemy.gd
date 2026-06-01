@@ -10,6 +10,7 @@ extends CharacterBody3D
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var shoot_shape: ShapeCast3D = $ShootZone
 @onready var model: Node3D = $Model
+@onready var shoot_sound_player: AudioStreamPlayer3D = $ShootSound
 
 var enemy_name: String
 var enemy_names := ["Robo", "Robo #2", "Robo #3"]
@@ -46,6 +47,7 @@ func get_hit(hit_damage: int):
 
 func shoot():
 	muzzle_flash()
+	shoot_sound_player.play()
 	shoot_shape.force_shapecast_update()
 	if shoot_shape.is_colliding():
 		var damage := randi_range(1, 3)

@@ -5,6 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://2c8tk66hjteo" path="res://scenes/blaster.tscn" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://cs2wkmr3r38hm" path="res://scenes/dual_shooter.tscn" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://b7pbo2461l5me" path="res://sprites/shadow.webp" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://ck3fa07wlwg7t" path="res://scenes/player_sounds.gd" id="6_smehm"]
+[ext_resource type="AudioStream" uid="uid://dx1x2kiv3acx3" path="res://audio/walking.ogg" id="6_tuyoq"]
+[ext_resource type="AudioStream" uid="uid://bd7is6bc0mk30" path="res://audio/weapon_change.ogg" id="7_fjrip"]
+[ext_resource type="AudioStream" uid="uid://dspam5lubqufh" path="res://audio/jump_c.ogg" id="8_ur7pv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 height = 1.8
@@ -37,6 +41,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.965, -0.94, -1)
 [node name="DualShooter" parent="Head/Camera3D/Weapons" unique_id=1350484772 instance=ExtResource("4_dqkch")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, -0.824, -0.756)
 
+[node name="AudioListener3D" type="AudioListener3D" parent="Head" unique_id=2126949049]
+current = true
+
 [node name="Decal" type="Decal" parent="." unique_id=1108944003]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.67579144)
 size = Vector3(3, 3, 3)
@@ -44,3 +51,22 @@ texture_albedo = ExtResource("5_qlg0r")
 
 [node name="EnemyTarget" type="Marker3D" parent="." unique_id=1520732866]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.022093, 0)
+
+[node name="Sounds" type="Node3D" parent="." unique_id=922532862]
+script = ExtResource("6_smehm")
+
+[node name="Walk" type="AudioStreamPlayer" parent="Sounds" unique_id=1107386030]
+stream = ExtResource("6_tuyoq")
+volume_db = -10.0
+
+[node name="Run" type="AudioStreamPlayer" parent="Sounds" unique_id=1370620899]
+stream = ExtResource("6_tuyoq")
+volume_db = -10.0
+pitch_scale = 1.4
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds" unique_id=391868170]
+stream = ExtResource("8_ur7pv")
+volume_db = -13.0
+
+[node name="ChangeWeapon" type="AudioStreamPlayer" parent="Sounds" unique_id=1117218048]
+stream = ExtResource("7_fjrip")

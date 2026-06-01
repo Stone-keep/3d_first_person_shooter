@@ -2,10 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://cqyuu7kpd16q8" path="res://scenes/weapon.tscn" id="1_bam1r"]
 [ext_resource type="PackedScene" uid="uid://b2p7bbkuxf7m" path="res://models/blaster.glb" id="2_5vvm8"]
+[ext_resource type="AudioStream" uid="uid://crcnp40rlvir" path="res://audio/weapons/Energy_Impulse_03.wav" id="2_8oy20"]
 [ext_resource type="Texture2D" uid="uid://csut3ovk0uh0b" path="res://sprites/nozzle_burst.png" id="3_2f31d"]
 
 [node name="Blaster" unique_id=2139439353 instance=ExtResource("1_bam1r")]
 weapon_name = "Blaster"
+shoot_sound = ExtResource("2_8oy20")
 damage = 5
 min_flash_size = 0.4
 max_flash_size = 0.6

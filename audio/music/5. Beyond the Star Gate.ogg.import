@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b5pa76kjs4gtr"
+path="res://.godot/imported/5. Beyond the Star Gate.ogg-12b64dd6221e6f9ce32d76396126f689.oggvorbisstr"
+
+[deps]
+
+source_file="res://audio/music/5. Beyond the Star Gate.ogg"
+dest_files=["res://.godot/imported/5. Beyond the Star Gate.ogg-12b64dd6221e6f9ce32d76396126f689.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
