@@ -15,7 +15,12 @@ recoil_rotation_degrees = 5.0
 [node name="blaster" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1826484222 instance=ExtResource("2_5vvm8")]
 transform = Transform3D(-0.7, 0, -1.0569706e-07, 0, 0.7, 0, 1.0569706e-07, 0, -0.7, 0, 0, 0)
 
+[node name="blaster2" parent="WeaponMesh/blaster" index="0" unique_id=1503261968]
+cast_shadow = 0
+
 [node name="MainBarrel" type="Sprite3D" parent="MuzzleFlash" parent_id_path=PackedInt32Array(617317940) index="0" unique_id=2104085594]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.31399122, -0.6393251)
 modulate = Color(1.4369954, 0.84969777, 0.30965626, 0.69900006)
 texture = ExtResource("3_2f31d")
+
+[editable path="WeaponMesh/blaster"]

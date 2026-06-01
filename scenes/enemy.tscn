@@ -2,7 +2,15 @@
 
 [ext_resource type="Script" uid="uid://cccqoultfmbad" path="res://scenes/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://b5hxnjwvrxuji" path="res://models/Textures/colormap.png" id="2_4ra3w"]
+[ext_resource type="Shader" uid="uid://d3r7piefmdwd3" path="res://shaders/flash.tres" id="2_5uy6h"]
 [ext_resource type="Texture2D" uid="uid://csut3ovk0uh0b" path="res://sprites/nozzle_burst.png" id="3_4ra3w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ra3w"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_5uy6h")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7el7r"]
 resource_name = "colormap"
@@ -44,6 +52,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_n2siq")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5uy6h"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_5uy6h")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
 [sub_resource type="ArrayMesh" id="ArrayMesh_pqxnc"]
 _surfaces = [{
 "aabb": AABB(-0.09999998, -0.050000004, -0.100000024, 0.2, 0.32500002, 0.2),
@@ -78,6 +93,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_pqxnc")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c4w8v"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_5uy6h")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
 [sub_resource type="ArrayMesh" id="ArrayMesh_d108p"]
 _surfaces = [{
 "aabb": AABB(1.8047785e-16, -0.2, -0.24142134, 0.29999998, 0.4, 0.7),
@@ -111,6 +133,13 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_d108p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwavj"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_5uy6h")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_28etn"]
 _surfaces = [{
@@ -170,21 +199,25 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, -0.30381286, 0)
 
 [node name="torso" type="MeshInstance3D" parent="Model" unique_id=945695145]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8047786e-15, 0, -0.02375)
+material_overlay = SubResource("ShaderMaterial_4ra3w")
 mesh = SubResource("ArrayMesh_1725w")
 skeleton = NodePath("")
 
 [node name="antenna" type="MeshInstance3D" parent="Model" unique_id=1307321745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8047786e-15, 0.6, -0.02375)
+material_overlay = SubResource("ShaderMaterial_5uy6h")
 mesh = SubResource("ArrayMesh_vdab5")
 skeleton = NodePath("")
 
 [node name="blaster-left" type="MeshInstance3D" parent="Model" unique_id=1828847864]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, -0.02375)
+material_overlay = SubResource("ShaderMaterial_c4w8v")
 mesh = SubResource("ArrayMesh_v60e1")
 skeleton = NodePath("")
 
 [node name="blaster-right" type="MeshInstance3D" parent="Model" unique_id=922155535]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, -0.02375)
+material_overlay = SubResource("ShaderMaterial_xwavj")
 mesh = SubResource("ArrayMesh_gj1n2")
 skeleton = NodePath("")
 

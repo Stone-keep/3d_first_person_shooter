@@ -1,0 +1,18 @@
+[gd_resource type="VisualShader" format=3 uid="uid://d3r7piefmdwd3"]
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_knj3b"]
+parameter_name = "ColorParameter"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_knj3b"]
+parameter_name = "Progress"
+hint = 1
+default_value_enabled = true
+
+[resource]
+nodes/vertex/0/position = Vector2(400, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_knj3b")
+nodes/fragment/2/position = Vector2(0, 20)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_knj3b")
+nodes/fragment/3/position = Vector2(20, 280)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 0, 1)

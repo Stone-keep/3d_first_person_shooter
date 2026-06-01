@@ -9,7 +9,6 @@ weapon_name = "DualShooter"
 damage = 2
 cooldown = 0.3
 continuous_shooting = true
-number_of_barrels = 2
 min_flash_size = 0.3
 max_flash_size = 0.45
 recoil_distance = Vector3(0, 0.03, 0.03)
@@ -18,6 +17,12 @@ recoil_rotation_degrees = 3.0
 [node name="blaster-repeater" parent="WeaponMesh" parent_id_path=PackedInt32Array(761438346) index="0" unique_id=1260464293 instance=ExtResource("2_7wsxr")]
 transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.7, 0, 6.119594e-08, 0, -0.7, 0, 0, 0)
 
+[node name="blaster-repeater2" parent="WeaponMesh/blaster-repeater" index="0" unique_id=20342599]
+cast_shadow = 0
+
+[node name="Group" parent="WeaponMesh/blaster-repeater/blaster-repeater2" index="0" unique_id=1037352341]
+cast_shadow = 0
+
 [node name="LeftBarrel" type="Sprite3D" parent="MuzzleFlash" parent_id_path=PackedInt32Array(617317940) index="0" unique_id=1537657992]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.128, 0.312, -0.84)
 texture = ExtResource("3_1krk6")
@@ -25,3 +30,5 @@ texture = ExtResource("3_1krk6")
 [node name="RightBarrel" type="Sprite3D" parent="MuzzleFlash" parent_id_path=PackedInt32Array(617317940) index="1" unique_id=1883629090]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.155, 0.312, -0.84)
 texture = ExtResource("3_1krk6")
+
+[editable path="WeaponMesh/blaster-repeater"]
