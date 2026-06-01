@@ -6,8 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://dsvmctv4la0no" path="res://scenes/enemy.tscn" id="2_yqjtg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8cj0n"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+sky_top_color = Color(0.075, 0.13, 0.11, 1)
+sky_horizon_color = Color(0.55, 0.62, 0.34, 1)
+sky_curve = 0.32
+sky_energy_multiplier = 0.78
+ground_bottom_color = Color(0.065, 0.08, 0.045, 1)
+ground_horizon_color = Color(0.55, 0.62, 0.34, 1)
+ground_curve = 0.22
+ground_energy_multiplier = 0.5
 
 [sub_resource type="Sky" id="Sky_uwrxv"]
 sky_material = SubResource("ProceduralSkyMaterial_8cj0n")
@@ -15,8 +21,30 @@ sky_material = SubResource("ProceduralSkyMaterial_8cj0n")
 [sub_resource type="Environment" id="Environment_yqjtg"]
 background_mode = 2
 sky = SubResource("Sky_uwrxv")
+ambient_light_source = 2
+ambient_light_color = Color(0.34, 0.42, 0.26, 1)
+ambient_light_sky_contribution = 0.35
+ambient_light_energy = 0.62
+reflected_light_source = 2
 tonemap_mode = 2
+tonemap_exposure = 1.05
+tonemap_white = 1.25
 glow_enabled = true
+glow_intensity = 0.22
+glow_bloom = 0.08
+fog_enabled = true
+fog_light_color = Color(0.55, 0.62, 0.34, 1)
+fog_light_energy = 0.45
+fog_sun_scatter = 0.12
+fog_density = 0.018
+fog_aerial_perspective = 0.72
+fog_sky_affect = 0.464
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0191
+volumetric_fog_albedo = Color(0.58, 0.66, 0.37, 1)
+volumetric_fog_anisotropy = 0.62
+adjustment_enabled = true
+adjustment_saturation = 1.08
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8cj0n"]
 size = Vector3(10, 1, 20)
@@ -29,11 +57,14 @@ script = ExtResource("1_lbhrr")
 
 [node name="HUD" parent="." unique_id=429791386 instance=ExtResource("1_lnu2h")]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1138551987]
+[node name="Enviornement" type="WorldEnvironment" parent="." unique_id=1138551987]
 environment = SubResource("Environment_yqjtg")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1570479734]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1570479734]
+transform = Transform3D(-0.1736482, -0.17101006, 0.96984625, 0, 0.9848077, 0.17364818, -0.9848077, 0.030153692, -0.17101008, 0, 0, 0)
+light_color = Color(0.72156864, 1, 0.6039216, 1)
+light_energy = 0.8
+light_angular_distance = 0.45
 shadow_enabled = true
 
 [node name="Floor" type="StaticBody3D" parent="." unique_id=487463042]

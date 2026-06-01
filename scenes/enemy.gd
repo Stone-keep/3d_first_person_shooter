@@ -100,5 +100,5 @@ func _on_detection_range_body_exited(body: CharacterBody3D) -> void:
 		shoot_timer.stop()
 
 func _on_shoot_timer_timeout() -> void:
-	if player:
+	if player and not is_dying:
 		shoot()

@@ -9,6 +9,8 @@ extends Node3D
 @export var weapon_name := "Weapon"
 @export var shoot_sound: AudioStream
 @export var damage := 1
+@export var current_ammo := 10
+@export var max_ammo := 10
 @export var cooldown := 0.5
 @export var continuous_shooting := false
 @export var min_flash_size: float

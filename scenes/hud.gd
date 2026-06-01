@@ -4,6 +4,7 @@ extends CanvasLayer
 @export var player_hp_red: CompressedTexture2D
 
 @onready var player_hp_bar: TextureProgressBar = $Control/PlayerInfo/PlayerHealthBackground/PlayerHealthBar
+@onready var ammo_label: Label = $Control/PlayerInfo/AmmoLabel
 
 func update_player_current_hp(current_health: int, max_health: int):
 	player_hp_bar.max_value = max_health
@@ -19,3 +20,6 @@ func update_player_current_hp(current_health: int, max_health: int):
 		player_hp_bar.texture_progress = player_hp_red
 	else:
 		player_hp_bar.texture_progress = player_hp_green
+
+func update_ammo(current_ammo: int, max_ammo: int):
+	pass
