@@ -3,7 +3,6 @@ extends CharacterBody3D
 @export var min_flash_size: float
 @export var max_flash_size: float
 @export var number_of_barrels := 1
-@export var damage := 1
 @export var health := 20
 @export var rotation_speed := 10.0
 
@@ -49,6 +48,7 @@ func shoot():
 	muzzle_flash()
 	shoot_shape.force_shapecast_update()
 	if shoot_shape.is_colliding():
+		var damage := randi_range(1, 3)
 		var collider := shoot_shape.get_collider(0)
 		
 		if collider.is_in_group("player"):
@@ -75,14 +75,13 @@ func flash():
 	for mesh in model.get_children():
 		if mesh is MeshInstance3D:
 			tween.tween_property(mesh.material_overlay, "shader_parameter/Progress", 0.0, 0.1)
-	
 
 func die():
 	player = null
 	is_dying = true
 	var tween = create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(self, "position", position + Vector3(0, -6, 0), 3.0)
+	tween.tween_property(self, "position", position + Vector3(0, -5, 0), 3.0)
 	tween.tween_property(self, "rotation", rotation + Vector3(randf_range(TAU, 2 * TAU), randf_range(TAU, 2 * TAU), randf_range(TAU, 2 * TAU)), 3.0)
 	tween.tween_property(self, "scale", Vector3(0.01, 0.01, 0.01), 1.0).set_delay(2.0)
 	tween.chain()

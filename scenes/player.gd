@@ -9,7 +9,6 @@ extends CharacterBody3D
 @onready var enemy_target: Marker3D = $EnemyTarget
 
 # Camera Movement
-
 var mouse_sensitivity := 0.002
 var joystick_horizontal_sensitivity := 2.5
 var joystick_vertical_sensitivity := 1.5
@@ -19,10 +18,10 @@ var max_pitch := 1.4
 # Movement
 const SPEED := 5.0
 const FRICTION := 8.0
-const JUMP_VELOCITY = 5.0
 var direction := Vector3.ZERO
 
 # Jumping
+const JUMP_VELOCITY = 5.0
 var current_jump := 0
 var max_jumps := 2
 
@@ -38,6 +37,11 @@ var current_weapon: Weapon:
 		current_weapon = value
 var current_weapon_node: Node3D
 var is_swapping_weapons := false
+
+# Health
+var max_health := 50
+var current_health := max_health
+signal health_changed(hp_current: int, hp_max: int)
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -138,4 +142,6 @@ func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, hit_damage: int
 	enemy.get_hit(hit_damage)
 
 func get_hit(hit_damage: int):
+	current_health -= hit_damage
+	health_changed.emit(current_health, max_health)
 	print("Player hit for: " + str(hit_damage))
