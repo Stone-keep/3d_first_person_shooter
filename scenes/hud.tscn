@@ -6,6 +6,19 @@
 [ext_resource type="Texture2D" uid="uid://c7e8kv5o6sykr" path="res://sprites/health_bar_progress_red.png" id="3_uo2fv"]
 [ext_resource type="Texture2D" uid="uid://bwqfotxe6i73w" path="res://sprites/health_bar_progress_green.png" id="4_6fi6k"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uo2fv"]
+content_margin_left = 200.0
+content_margin_right = 200.0
+content_margin_bottom = 20.0
+bg_color = Color(0.734698, 0.61055017, 0.13335153, 0.29500002)
+border_color = Color(1, 1, 1, 1)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_047uy"]
+bg_color = Color(0.73333335, 0.6117647, 0.13333334, 1)
+border_color = Color(0.8416741, 0.79372853, 0.7213625, 1)
+border_blend = true
+
 [node name="HUD" type="CanvasLayer" unique_id=429791386]
 script = ExtResource("1_6fi6k")
 player_hp_green = ExtResource("4_6fi6k")
@@ -75,3 +88,29 @@ value = 50.0
 nine_patch_stretch = true
 texture_progress = ExtResource("4_6fi6k")
 texture_progress_offset = Vector2(13, 14)
+
+[node name="Reload" type="VBoxContainer" parent="Control" unique_id=425334255]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.733
+anchor_right = 0.5
+anchor_bottom = 0.733
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ReloadLabel" type="Label" parent="Control/Reload" unique_id=1741353]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 40
+text = "Reloading"
+horizontal_alignment = 1
+
+[node name="ReloadProgress" type="ProgressBar" parent="Control/Reload" unique_id=43130567]
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_uo2fv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_047uy")
+step = 0.1
+show_percentage = false

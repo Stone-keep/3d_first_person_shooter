@@ -11,6 +11,7 @@ extends Node3D
 @export var damage := 1
 @export var current_ammo := 10
 @export var max_ammo := 10
+@export var reload_time := 1.0
 @export var cooldown := 0.5
 @export var continuous_shooting := false
 @export var min_flash_size: float
@@ -21,6 +22,7 @@ extends Node3D
 var current_barrel := 0
 var is_recoiling := false
 var is_on_cooldown := false
+var is_reloading := false
 
 
 func _ready() -> void:
@@ -30,7 +32,7 @@ func _ready() -> void:
 	cooldown_timer.wait_time = cooldown
 	shoot_sound_player.stream = shoot_sound
 	
-func muzzle_flash():
+func muzzle_flash() -> void:
 	var num_barrels := muzzleflash.get_child_count()
 	if not num_barrels:
 		return
@@ -42,8 +44,12 @@ func muzzle_flash():
 	tween.tween_property(barrel_flash, "scale", Vector3.ZERO, 0.2)
 	current_barrel = posmod(current_barrel + 1, num_barrels)
 
-func play_shoot_sound():
+func play_shoot_sound() -> void:
 	shoot_sound_player.play()
+
+func reload() -> void:
+	current_ammo = max_ammo
+	is_reloading = false
 
 func recoil_animation():
 	if not is_recoiling:

@@ -13,6 +13,8 @@ extends Node3D
 
 func _ready() -> void:
 	player.health_changed.connect(_on_player_health_changed)
+	player.ammo_changed.connect(_on_player_ammo_changed)
+	player.weapon_reload.connect(_on_player_weapon_reload)
 	hud.update_player_current_hp(player.current_health, player.max_health)
 	enviornement_animation()
 
@@ -45,3 +47,9 @@ func enviornement_animation():
 
 func _on_player_health_changed(hp_current: int, hp_max: int):
 	hud.update_player_current_hp(hp_current, hp_max)
+
+func _on_player_ammo_changed(current_ammo: int, max_ammo: int):
+	hud.update_ammo(current_ammo, max_ammo)
+
+func _on_player_weapon_reload(max_ammo: int, time: float):
+	await hud.reload_progress(max_ammo, time)

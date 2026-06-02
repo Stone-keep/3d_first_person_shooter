@@ -40,6 +40,8 @@ var current_weapon: Weapon:
 		current_weapon = value
 var current_weapon_node: Node3D
 var is_swapping_weapons := false
+signal ammo_changed(current_ammo: int, max_ammo: int)
+signal weapon_reload(max_ammo: int, time: float)
 
 # Health
 var max_health := 50
@@ -129,8 +131,9 @@ func check_for_target() -> Object:
 	return shoot_raycast.get_collider()
 
 func shoot() -> void:
-	if is_swapping_weapons or current_weapon_node.is_on_cooldown:
+	if is_swapping_weapons or current_weapon_node.is_on_cooldown or current_weapon_node.is_reloading:
 		return
+	
 	current_weapon_node.is_on_cooldown = true
 	current_weapon_node.cooldown_timer.start()
 	current_weapon_node.play_shoot_sound()
@@ -141,10 +144,23 @@ func shoot() -> void:
 		var impact_position = shoot_raycast.get_collision_point()
 		hit_enemy(target, impact_position, current_weapon_node.damage)
 
+	current_weapon_node.current_ammo -= 1
+	ammo_changed.emit(current_weapon_node.current_ammo, current_weapon_node.max_ammo)
+	if current_weapon_node.current_ammo <= 0:
+		reload()
+
+func reload() -> void:
+	current_weapon_node.is_reloading = true
+	weapon_reload.emit(current_weapon_node.max_ammo, current_weapon_node.reload_time)
+	await get_tree().create_timer(current_weapon_node.reload_time).timeout
+	current_weapon_node.reload()
+
 func continuous_shoot() -> void:
 	shoot()
 
 func swap_weapons() -> void:
+	if current_weapon_node.is_reloading:
+		return
 	is_swapping_weapons = true
 	current_weapon = posmod(current_weapon + 1, Weapon.size()) as Weapon
 	current_weapon_node = weapons.get_child(current_weapon)
@@ -153,6 +169,7 @@ func swap_weapons() -> void:
 	tween.tween_callback(sounds.play_change_weapon_sound)
 	tween.tween_callback(weapons.get_child(current_weapon).show)
 	tween.tween_callback(weapons.get_child(previous_weapon).hide)
+	ammo_changed.emit(current_weapon_node.current_ammo, current_weapon_node.max_ammo)
 	tween.tween_property(weapons, "position", weapon_start_position, 0.2)
 
 	await tween.finished
