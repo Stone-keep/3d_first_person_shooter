@@ -195,5 +195,10 @@ func get_hit(hit_damage: int):
 	if current_health <= 0:
 		die()
 
+func heal_up(amount: int):
+	current_health += amount
+	health_changed.emit(current_health, max_health)
+	print("Player health: %s/%s" % [current_health, max_health])
+
 func die():
 	print("player dead")

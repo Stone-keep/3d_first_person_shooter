@@ -12,7 +12,7 @@ func update_player_current_hp(current_health: int, max_health: int):
 	player_hp_bar.max_value = max_health
 	
 	var tween = create_tween()
-	tween.tween_property(player_hp_bar, "value", current_health, 0.2)
+	tween.tween_property(player_hp_bar, "value", current_health, 0.3)
 
 	var value := player_hp_bar.value
 	var max_value := player_hp_bar.max_value

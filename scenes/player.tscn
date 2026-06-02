@@ -15,7 +15,7 @@ height = 1.8
 
 [node name="Player" type="CharacterBody3D" unique_id=1309102338 groups=["player"]]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 13
 script = ExtResource("1_3vyb7")
 shot_impact_scene = ExtResource("2_g2els")
 

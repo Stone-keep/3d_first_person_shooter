@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d3x5o24xqoi4y"]
+
+[ext_resource type="Script" uid="uid://chtuycimfccoi" path="res://scenes/pickups/heart_pickup.gd" id="1_cnyf0"]
+[ext_resource type="PackedScene" uid="uid://rriv3ajbxnl1" path="res://models/pickup-heart.glb" id="1_lkiph"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cnyf0"]
+size = Vector3(0.54785156, 0.6923828, 0.5588379)
+
+[node name="HeartPickup" type="Area3D" unique_id=1418570969]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_cnyf0")
+
+[node name="Model" parent="." unique_id=1632374105 instance=ExtResource("1_lkiph")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1815246122]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_cnyf0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
