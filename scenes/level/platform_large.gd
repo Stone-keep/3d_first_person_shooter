@@ -8,7 +8,7 @@ var grass_meshes = [
 ]
 
 func _ready() -> void:
-	var grass_amount := randi_range(20, 30)
+	var grass_amount := randi_range(40, 60)
 	var aabb := platform.get_aabb()
 
 	var usable_percent := 0.8
@@ -31,4 +31,6 @@ func _ready() -> void:
 
 		grass.global_position = platform.to_global(Vector3(local_x, local_y, local_z))
 		grass.rotation.y = randf_range(0.0, TAU)
-		grass.scale = Vector3(0.3, 0.3, 0.3)
+
+		var s := randf_range(0.8, 1.15)
+		grass.scale = Vector3(0.3, 0.3, 0.3) * s
