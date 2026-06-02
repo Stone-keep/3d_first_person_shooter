@@ -180,7 +180,7 @@ shadow_mesh = SubResource("ArrayMesh_28etn")
 size = Vector3(0.6326904, 0.57821655, 0.6230469)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_md0e3"]
-radius = 5.0
+radius = 10.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4ra3w"]
 resource_local_to_scene = true

@@ -23,10 +23,11 @@ const FRICTION := 8.0
 var direction := Vector3.ZERO
 var is_running := false
 
-# Jumping
+# Jumping & Falling
 const JUMP_VELOCITY = 5.0
 var current_jump := 0
 var max_jumps := 2
+var gravity_modifier := 0.7
 
 # Weapons & Shooting
 enum Weapon {BLASTER, DUAL_SHOOTER}
@@ -83,6 +84,9 @@ func get_input(delta: float) -> void:
 	elif Input.is_action_just_released("run"):
 		is_running = false
 
+	if Input.is_action_just_pressed("reload") and current_weapon_node.current_ammo < current_weapon_node.max_ammo:
+		reload()
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -119,7 +123,7 @@ func jump_and_fall(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		sounds.play_jump_sound()
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta * gravity_modifier
 
 func rotate_from_vector(v: Vector2):
 	if v.length() > 0:
@@ -150,6 +154,8 @@ func shoot() -> void:
 		reload()
 
 func reload() -> void:
+	if current_weapon_node.is_reloading:
+		return
 	current_weapon_node.is_reloading = true
 	weapon_reload.emit(current_weapon_node.max_ammo, current_weapon_node.reload_time)
 	await get_tree().create_timer(current_weapon_node.reload_time).timeout
