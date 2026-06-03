@@ -6,6 +6,25 @@
 [ext_resource type="Texture2D" uid="uid://c7e8kv5o6sykr" path="res://sprites/health_bar_progress_red.png" id="3_uo2fv"]
 [ext_resource type="Texture2D" uid="uid://bwqfotxe6i73w" path="res://sprites/health_bar_progress_green.png" id="4_6fi6k"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enemy_bg"]
+bg_color = Color(0.02745098, 0.03137255, 0.02745098, 0.78)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.53333336, 0.6117647, 0.3372549, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enemy_fill"]
+bg_color = Color(0.92941177, 0.23529412, 0.12156863, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uo2fv"]
 content_margin_left = 200.0
 content_margin_right = 200.0
@@ -46,6 +65,37 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 texture = ExtResource("1_ahhtf")
 stretch_mode = 4
+
+[node name="EnemyInfo" type="VBoxContainer" parent="Control" unique_id=821549193]
+visible = false
+custom_minimum_size = Vector2(420, 70)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.0
+offset_top = 26.0
+offset_right = 210.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme_override_constants/separation = 6
+
+[node name="EnemyNameLabel" type="Label" parent="Control/EnemyInfo" unique_id=1784461965]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "Enemy"
+horizontal_alignment = 1
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="Control/EnemyInfo" unique_id=1425837920]
+custom_minimum_size = Vector2(420, 24)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_enemy_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_enemy_fill")
+max_value = 20.0
+value = 20.0
+show_percentage = false
 
 [node name="PlayerInfo" type="VBoxContainer" parent="Control" unique_id=1208588665]
 custom_minimum_size = Vector2(500, 150)

@@ -15,6 +15,8 @@ func _ready() -> void:
 	player.health_changed.connect(_on_player_health_changed)
 	player.ammo_changed.connect(_on_player_ammo_changed)
 	player.weapon_reload.connect(_on_player_weapon_reload)
+	player.targeted_enemy_updated.connect(_on_player_targeted_enemy_updated)
+	player.targeted_enemy_lost.connect(_on_player_targeted_enemy_lost)
 	hud.update_player_current_hp(player.current_health, player.max_health)
 	enviornement_animation()
 
@@ -53,3 +55,9 @@ func _on_player_ammo_changed(current_ammo: int, max_ammo: int):
 
 func _on_player_weapon_reload(max_ammo: int, time: float):
 	await hud.reload_progress(max_ammo, time)
+
+func _on_player_targeted_enemy_updated(enemy_name: String, current_health: int, max_health: int):
+	hud.update_enemy_info(enemy_name, current_health, max_health)
+
+func _on_player_targeted_enemy_lost():
+	hud.hide_enemy_info()

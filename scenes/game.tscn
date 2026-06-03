@@ -98,7 +98,7 @@ transform = Transform3D(0.25397736, 0, 0.9672102, 0, 1, 0, -0.9672102, 0, 0.2539
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.93774, 8.0412855, 59.890404)
 
 [node name="Enemy9" parent="Characters" unique_id=1526879963 instance=ExtResource("2_yqjtg")]
-transform = Transform3D(0.30368388, 0, -0.9527729, 0, 1, 0, 0.9527729, 0, 0.30368388, 11.810993, 9.71456, 59.022125)
+transform = Transform3D(0.47295067, 0, -0.881089, 0, 1, 0, 0.881089, 0, 0.47295067, 7.170933, 4.971527, 63.39465)
 
 [node name="Enemy10" parent="Characters" unique_id=397139771 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.9988442, 0, -0.048065405, 0, 1, 0, 0.048065405, 0, -0.9988442, -12.4305, 5.5466013, 55.071247)

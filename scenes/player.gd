@@ -43,6 +43,9 @@ var current_weapon_node: Node3D
 var is_swapping_weapons := false
 signal ammo_changed(current_ammo: int, max_ammo: int)
 signal weapon_reload(max_ammo: int, time: float)
+signal targeted_enemy_updated(enemy_name: String, current_health: int, max_health: int)
+signal targeted_enemy_lost()
+var targeted_enemy: Node3D
 
 # Health
 var max_health := 50
@@ -59,6 +62,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	get_input(delta)
+	update_targeted_enemy()
 	move(delta)
 	jump_and_fall(delta)
 	move_and_slide()
@@ -133,6 +137,20 @@ func rotate_from_vector(v: Vector2):
 
 func check_for_target() -> Object:
 	return shoot_raycast.get_collider()
+
+func update_targeted_enemy() -> void:
+	var target = check_for_target()
+	if target and target.is_in_group("enemies") and target.can_show_target_info():
+		targeted_enemy = target
+		var target_info: Dictionary = target.get_target_info()
+		targeted_enemy_updated.emit(
+			target_info["name"],
+			target_info["current_health"],
+			target_info["max_health"]
+		)
+	elif targeted_enemy:
+		targeted_enemy = null
+		targeted_enemy_lost.emit()
 
 func shoot() -> void:
 	if is_swapping_weapons or current_weapon_node.is_on_cooldown or current_weapon_node.is_reloading:

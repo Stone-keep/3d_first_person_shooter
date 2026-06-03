@@ -7,6 +7,9 @@ extends CanvasLayer
 @onready var ammo_label: Label = $Control/PlayerInfo/AmmoLabel
 @onready var reload_container: VBoxContainer = $Control/Reload
 @onready var reload_progress_bar: ProgressBar = $Control/Reload/ReloadProgress
+@onready var enemy_info: VBoxContainer = $Control/EnemyInfo
+@onready var enemy_name_label: Label = $Control/EnemyInfo/EnemyNameLabel
+@onready var enemy_health_bar: ProgressBar = $Control/EnemyInfo/EnemyHealthBar
 
 func update_player_current_hp(current_health: int, max_health: int):
 	player_hp_bar.max_value = max_health
@@ -25,6 +28,15 @@ func update_player_current_hp(current_health: int, max_health: int):
 
 func update_ammo(current_ammo: int, max_ammo: int):
 	ammo_label.text = "Ammo: %s/%s" % [current_ammo, max_ammo]
+
+func update_enemy_info(enemy_name: String, current_health: int, max_health: int) -> void:
+	enemy_info.show()
+	enemy_name_label.text = enemy_name
+	enemy_health_bar.max_value = max_health
+	enemy_health_bar.value = current_health
+
+func hide_enemy_info() -> void:
+	enemy_info.hide()
 
 func reload_progress(max_ammo: int, time: float):
 	reload_progress_bar.value = 0

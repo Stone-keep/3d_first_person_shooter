@@ -22,9 +22,22 @@ var state: EnemyState = EnemyState.IDLE
 var player: CharacterBody3D
 var starting_position: Vector3
 var starting_rotation: Vector3
+var max_health: int
+var current_health: int
 
+var enemy_names := [
+	"Scrapjaw",
+	"Boltface",
+	"Clank",
+	"Redcap",
+	"Iron Grin",
+	"Buzzbox",
+	"Rivet",
+	"Snarlbot",
+	"Chrome Dome",
+	"Angry Toaster"
+]
 var enemy_name: String
-var enemy_names := ["Robo", "Robo #2", "Robo #3"]
 
 var current_barrel := 0
 
@@ -37,6 +50,8 @@ func _ready() -> void:
 		sprite.modulate = Color(0.99, 0.0, 0.05, randf_range(0.6, 0.8))
 	
 	enemy_name = enemy_names.pick_random()
+	max_health = health
+	current_health = max_health
 	starting_position = position
 	starting_rotation = rotation_degrees
 
@@ -70,12 +85,10 @@ func enter_state(new_state: EnemyState) -> void:
 			start_idle_animation()
 
 		EnemyState.ATTACKING:
-			stop_idle_animation()
 			shoot_timer.start()
 
 		EnemyState.DYING:
 			player = null
-			stop_idle_animation()
 			shoot_timer.stop()
 			die_animation()
 
@@ -137,10 +150,20 @@ func get_hit(hit_damage: int) -> void:
 	if state == EnemyState.DYING:
 		return
 	flash()
-	health -= hit_damage
-	print(health)
-	if health <= 0:
+	current_health -= hit_damage
+	print(current_health)
+	if current_health <= 0:
 		set_state(EnemyState.DYING)
+
+func can_show_target_info() -> bool:
+	return state != EnemyState.DYING
+
+func get_target_info() -> Dictionary:
+	return {
+		"name": enemy_name,
+		"current_health": current_health,
+		"max_health": max_health
+	}
 
 func shoot() -> void:
 	muzzle_flash()
