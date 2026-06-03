@@ -74,7 +74,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7786157, 6.012886)
 
 [node name="Enemy" parent="Characters" unique_id=14247012 instance=ExtResource("2_yqjtg")]
-transform = Transform3D(-0.99767476, 0, 0.06815454, 0, 1, 0, -0.06815454, 0, -0.99767476, 5.217706, 4.1668773, -23.487547)
+transform = Transform3D(-0.99767476, 0, 0.06815454, 0, 1, 0, -0.06815454, 0, -0.99767476, 5.217706, 5.7630057, -23.487547)
 
 [node name="Enemy2" parent="Characters" unique_id=1899125799 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.8195323, 0, -0.57303303, 0, 1, 0, 0.57303303, 0, -0.8195323, 27.718256, 4.8529997, -34.667343)
@@ -315,4 +315,7 @@ transform = Transform3D(1.5704978, 0.46438006, 0.9632696, -0.39585158, 1.8423765
 [node name="Pickups" type="Node3D" parent="." unique_id=32930930]
 
 [node name="HeartPickup" parent="Pickups" unique_id=1418570969 instance=ExtResource("10_vtaks")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8378602, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.13222, 5.3160405, 9.345845)
+
+[node name="HeartPickup2" parent="Pickups" unique_id=1636430508 instance=ExtResource("10_vtaks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.71573, 2.8682668, 81.697914)

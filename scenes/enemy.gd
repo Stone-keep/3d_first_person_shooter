@@ -19,15 +19,22 @@ var player: CharacterBody3D
 
 var current_barrel := 0
 var is_dying := false
+var starting_position: Vector3
+var starting_rotation: Vector3
+var is_idle := true
+var idle_tween: Tween
 
 func _ready() -> void:
 	for sprite in muzzleflash.get_children():
 		sprite.scale = Vector3.ZERO
 		sprite.modulate = Color(0.99, 0.0, 0.05, randf_range(0.6, 0.8))
 	enemy_name = enemy_names.pick_random()
+	starting_position = global_position
+	starting_rotation = rotation_degrees
+	idle_animation()
 
 func _physics_process(delta: float) -> void:
-	if not player or is_dying:
+	if is_dying or not player:
 		return
 	var target_dir = (player.enemy_target.global_position - global_position).normalized()
 	var current_dir = -global_transform.basis.z
@@ -35,6 +42,36 @@ func _physics_process(delta: float) -> void:
 	look_at(global_transform.origin + new_dir, Vector3.UP)
 	rotation.z = 0.0
 	rotation.x = clamp(rotation.x, deg_to_rad(-45), deg_to_rad(45))
+
+func idle_animation():
+	if is_dying:
+		return
+	is_idle = true if not player else false
+	if is_idle:
+		var random_delay = randf_range(0.0, 2.5)
+		var random_distance = randf_range(0.5, 0.8)
+		var random_rotation = randf_range(25, 45)
+		await get_tree().create_timer(random_delay).timeout
+
+		if is_dying or player:
+			return
+		
+		idle_tween = create_tween()
+		idle_tween.set_loops()
+		idle_tween.set_parallel(true)
+		idle_tween.tween_property(self, "position:y", starting_position.y + random_distance, 3.0)
+		idle_tween.tween_property(self, "rotation_degrees:y", starting_rotation.y + random_rotation, 3.0)
+		idle_tween.chain()
+		idle_tween.tween_property(self, "position:y", starting_position.y - random_distance, 3.0)
+		idle_tween.tween_property(self, "rotation_degrees:y", starting_rotation.y - random_rotation, 3.0)
+	else:
+		stop_idle_animation()
+		
+func stop_idle_animation():
+	if idle_tween:
+		idle_tween.kill()
+		idle_tween = null
+
 
 func get_hit(hit_damage: int):
 	if is_dying:
@@ -92,12 +129,14 @@ func die():
 func _on_detection_range_body_entered(body: CharacterBody3D) -> void:
 	if body.is_in_group("player"):
 		player = body
+		stop_idle_animation()
 		shoot_timer.start()
 
 func _on_detection_range_body_exited(body: CharacterBody3D) -> void:
 	if body == player:
 		player = null
 		shoot_timer.stop()
+		idle_animation()
 
 func _on_shoot_timer_timeout() -> void:
 	if player and not is_dying:
