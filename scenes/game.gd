@@ -1,5 +1,6 @@
 extends Node3D
 
+@export var portal_scene: PackedScene
 @export var morning_color := Color(0.722, 1.0, 0.604)
 @export var daylight_color := Color(0.918, 1.0, 0.839)
 @export var sunset_color := Color(1.0, 0.604, 0.388)
@@ -11,6 +12,8 @@ extends Node3D
 @onready var enviornement: WorldEnvironment = $Enviornement
 @onready var sun: DirectionalLight3D = $Sun
 @onready var sky_material: ProceduralSkyMaterial = enviornement.environment.sky.sky_material
+
+var portal_position := Vector3(-45.3, 0.7, 8.73)
 
 func _ready() -> void:
 	player.health_changed.connect(_on_player_health_changed)
@@ -51,11 +54,17 @@ func enviornement_animation():
 	tween.tween_property(enviornement.environment, "volumetric_fog_albedo", Color(0.82, 0.36, 0.26), half_day_time)
 	tween.tween_property(enviornement.environment, "volumetric_fog_density", 0.014, half_day_time)
 
+func spawn_portal(location: Vector3) -> void:
+	var portal = portal_scene.instantiate()
+	add_child(portal)
+	portal.global_position = location
+	portal.player_entered.connect(_on_portal_player_entered)
+
 func lose_game(cause: String):
 	print(cause)
 
 func win_game():
-	pass
+	print("game won")
 
 func _on_player_health_changed(hp_current: int, hp_max: int):
 	hud.update_player_current_hp(hp_current, hp_max)
@@ -80,3 +89,9 @@ func _on_death_zone_body_entered(body: Node3D) -> void:
 
 func _on_game_timer_timeout() -> void:
 	lose_game("timeout")
+
+func _on_portal_player_entered() -> void:
+	win_game()
+
+func _on_portal_test_timeout() -> void:
+	spawn_portal(Vector3(-0.127, 0.813, 0.343))

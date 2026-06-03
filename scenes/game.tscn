@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cvl3ornyu4inh" path="res://scenes/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bsbrmn0jwohup" path="res://scenes/hud.tscn" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://connwbqdnwbio" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://1cin6wcsqvfu" path="res://scenes/portal.tscn" id="2_kvpfn"]
 [ext_resource type="PackedScene" uid="uid://dsvmctv4la0no" path="res://scenes/enemy.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://bogijtw0acja4" path="res://scenes/level/platform_large.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://o0x5qrn36hcv" path="res://scenes/level/platform_small_rotating.tscn" id="5_0tnpc"]
@@ -57,6 +58,7 @@ size = Vector3(250, 1, 250)
 
 [node name="Game" type="Node3D" unique_id=1158255392]
 script = ExtResource("1_lbhrr")
+portal_scene = ExtResource("2_kvpfn")
 half_day_time = 120.0
 
 [node name="HUD" parent="." unique_id=429791386 instance=ExtResource("1_lnu2h")]
@@ -285,13 +287,13 @@ transform = Transform3D(0.5304309, -0.088350065, -0.84311163, 0.20410766, 0.9786
 transform = Transform3D(2.9939046, 0, 0.19114101, 0, 3, 0, -0.19114101, 0, 2.9939046, -45.18839, -2.6590896, 15.225683)
 
 [node name="WallLow14" parent="Level" unique_id=1321271303 instance=ExtResource("8_vtaks")]
-transform = Transform3D(-8.742278e-08, -1, 0, 2, -4.371139e-08, 0, 0, 0, 1, -47.57401, 0.9686749, 10.502684)
+transform = Transform3D(-8.742278e-08, -1, 0, 2, -4.371139e-08, 0, 0, 0, 1, -47.57401, 0.9686749, 8.474514)
 
 [node name="WallLow15" parent="Level" unique_id=302944489 instance=ExtResource("8_vtaks")]
-transform = Transform3D(0.5565741, -0.9604979, 0, 1.9209958, 0.27828705, 0, 0, 0, 1, -42.17082, 0.16360366, 10.502684)
+transform = Transform3D(0.5565741, -0.9604979, 0, 1.9209958, 0.27828705, 0, 0, 0, 1, -42.17082, 0.16360366, 8.474514)
 
 [node name="WallLow16" parent="Level" unique_id=59410559 instance=ExtResource("8_vtaks")]
-transform = Transform3D(2.6766078, 0.02683269, -0.12857816, -0.34736863, 0.0011513219, -0.99168867, -0.07144643, 0.9996393, 0.0045935083, -44.926685, 3.1509418, 9.992384)
+transform = Transform3D(2.6766078, 0.02683269, -0.12857816, -0.34736863, 0.0011513219, -0.99168867, -0.07144643, 0.9996393, 0.0045935083, -44.926685, 3.1509418, 7.9642143)
 
 [node name="WallHigh15" parent="Level" unique_id=1022895956 instance=ExtResource("6_gee14")]
 transform = Transform3D(1.6902438, 0, -1.0691472, 0, 2, 0, 1.0691472, 0, 1.6902438, -49.45396, -1.9060977, 18.358156)
@@ -336,5 +338,11 @@ wait_time = 240.0
 one_shot = true
 autostart = true
 
+[node name="PortalTest" type="Timer" parent="." unique_id=16197963]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
 [connection signal="body_entered" from="Level/DeathZone" to="." method="_on_death_zone_body_entered"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="timeout" from="PortalTest" to="." method="_on_portal_test_timeout"]

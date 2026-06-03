@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://1cin6wcsqvfu"]
+
+[ext_resource type="Script" uid="uid://bfrltkbdpgvwu" path="res://scenes/portal.gd" id="1_1ffj6"]
+[ext_resource type="Shader" uid="uid://bqpv4y7x6y0wa" path="res://shaders/pixel_portals/pixel_portal.gdshader" id="1_v0xau"]
+[ext_resource type="AudioStream" uid="uid://bv5l7vpwvhoy5" path="res://audio/weapons/Energy_Impulse_04.wav" id="3_jr6l0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppl40"]
+render_priority = 0
+shader = ExtResource("1_v0xau")
+shader_parameter/last_layer_transparent = false
+shader_parameter/first_layer_transparent = false
+shader_parameter/transparency_transition = 1
+shader_parameter/transparency_falloff = 1.0
+shader_parameter/rim = true
+shader_parameter/rim_extra_radius = 0.1
+shader_parameter/color_repeat_layer = 0
+shader_parameter/color_offset_layer = 0
+shader_parameter/color_one = Color(0.25012386, 0.71414226, 0.38552687, 1)
+shader_parameter/color_two = Color(0, 0.11207495, 0, 1)
+shader_parameter/color_falloff = 1.0
+shader_parameter/color_transition = 0
+shader_parameter/glow_repeat_layer = 0
+shader_parameter/glow_offset_layer = 0
+shader_parameter/glow = 0.5
+shader_parameter/glow_falloff = 1.0
+shader_parameter/depth_amount = 1.0
+shader_parameter/layers = 12
+shader_parameter/radius = 0.550000026125
+shader_parameter/radius_reduction = 0.1
+shader_parameter/radius_reduction_type = 0
+shader_parameter/vary_radius = true
+shader_parameter/radius_variation = 0.1
+shader_parameter/radius_speed_variation = 1.0
+shader_parameter/radius_variation_offset = 1.0
+shader_parameter/radius_random_offset = true
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/rotation_repeat_layer = 0
+shader_parameter/rotation_offset_layer = 0
+shader_parameter/rotation = 0.0
+shader_parameter/pixel_size = 1.0000000475
+shader_parameter/resolution = Vector2(512, 512)
+shader_parameter/dither_offset = Vector2i(2, 0)
+shader_parameter/bayer_size = 2
+shader_parameter/interpolate = true
+shader_parameter/falloff = 2.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_ppl40"]
+size = Vector2(4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v0xau"]
+size = Vector3(4, 4, 0.5)
+
+[node name="Portal" type="Area3D" unique_id=1910205615]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_1ffj6")
+
+[node name="PortalSurface" type="MeshInstance3D" parent="." unique_id=695930693]
+material_override = SubResource("ShaderMaterial_ppl40")
+mesh = SubResource("QuadMesh_ppl40")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=584737000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21749794, 0)
+light_color = Color(0.2509804, 0.7137255, 0.38431373, 1)
+light_energy = 8.0
+light_indirect_energy = 2.0
+omni_range = 8.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1936990191]
+shape = SubResource("BoxShape3D_v0xau")
+
+[node name="OpeningSound" type="AudioStreamPlayer3D" parent="." unique_id=1785577574]
+stream = ExtResource("3_jr6l0")
+unit_size = 24.9
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
