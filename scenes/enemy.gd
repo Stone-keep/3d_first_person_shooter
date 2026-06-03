@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
+@export var health: int
+@export var min_damage: int
+@export var max_damage: int
 @export var min_flash_size: float
 @export var max_flash_size: float
 @export var number_of_barrels := 1
-@export var health := 20
 @export var rotation_speed := 10.0
 
 @onready var muzzleflash: Node3D = $Model/MuzzleFlash
@@ -151,7 +153,6 @@ func get_hit(hit_damage: int) -> void:
 		return
 	flash()
 	current_health -= hit_damage
-	print(current_health)
 	if current_health <= 0:
 		set_state(EnemyState.DYING)
 
@@ -170,7 +171,7 @@ func shoot() -> void:
 	shoot_sound_player.play()
 	shoot_shape.force_shapecast_update()
 	if shoot_shape.is_colliding():
-		var damage := randi_range(1, 3)
+		var damage := randi_range(min_damage, max_damage)
 		var collider := shoot_shape.get_collider(0)
 		
 		if collider.is_in_group("player"):

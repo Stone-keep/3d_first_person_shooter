@@ -10,6 +10,7 @@ extends CanvasLayer
 @onready var enemy_info: VBoxContainer = $Control/EnemyInfo
 @onready var enemy_name_label: Label = $Control/EnemyInfo/EnemyNameLabel
 @onready var enemy_health_bar: ProgressBar = $Control/EnemyInfo/EnemyHealthBar
+@onready var timer_label: Label = $Control/TimerLabel
 
 func update_player_current_hp(current_health: int, max_health: int):
 	player_hp_bar.max_value = max_health
@@ -48,3 +49,17 @@ func reload_progress(max_ammo: int, time: float):
 
 	update_ammo(max_ammo, max_ammo)
 	reload_container.hide()
+
+func update_timer_label(time_left: float):
+	var total_seconds = ceili(time_left)
+	var minutes = total_seconds / 60
+	var seconds = total_seconds % 60
+	timer_label.text = "Time Left: %02d:%02d" % [minutes, seconds]
+	if total_seconds <= 10:
+		timer_label.add_theme_color_override("font_color", Color.DARK_RED)
+	elif total_seconds <= 30:
+		timer_label.add_theme_color_override("font_color", Color.RED)
+	elif total_seconds <= 60:
+		timer_label.add_theme_color_override("font_color", Color.ORANGE)
+	else:
+		timer_label.add_theme_color_override("font_color", Color.WHITE)

@@ -7,6 +7,7 @@ extends Node3D
 
 @onready var player: CharacterBody3D = $Characters/Player
 @onready var hud: CanvasLayer = $HUD
+@onready var game_timer: Timer = $GameTimer
 @onready var enviornement: WorldEnvironment = $Enviornement
 @onready var sun: DirectionalLight3D = $Sun
 @onready var sky_material: ProceduralSkyMaterial = enviornement.environment.sky.sky_material
@@ -19,6 +20,9 @@ func _ready() -> void:
 	player.targeted_enemy_lost.connect(_on_player_targeted_enemy_lost)
 	hud.update_player_current_hp(player.current_health, player.max_health)
 	enviornement_animation()
+
+func _process(_delta: float) -> void:
+	hud.update_timer_label(game_timer.time_left)
 
 func enviornement_animation():
 	var tween = create_tween()
@@ -47,8 +51,16 @@ func enviornement_animation():
 	tween.tween_property(enviornement.environment, "volumetric_fog_albedo", Color(0.82, 0.36, 0.26), half_day_time)
 	tween.tween_property(enviornement.environment, "volumetric_fog_density", 0.014, half_day_time)
 
+func lose_game(cause: String):
+	print(cause)
+
+func win_game():
+	pass
+
 func _on_player_health_changed(hp_current: int, hp_max: int):
 	hud.update_player_current_hp(hp_current, hp_max)
+	if hp_current <= 0:
+		lose_game("health")
 
 func _on_player_ammo_changed(current_ammo: int, max_ammo: int):
 	hud.update_ammo(current_ammo, max_ammo)
@@ -61,3 +73,10 @@ func _on_player_targeted_enemy_updated(enemy_name: String, current_health: int, 
 
 func _on_player_targeted_enemy_lost():
 	hud.hide_enemy_info()
+
+func _on_death_zone_body_entered(body: Node3D) -> void:
+	if body == player:
+		lose_game("fall")
+
+func _on_game_timer_timeout() -> void:
+	lose_game("timeout")

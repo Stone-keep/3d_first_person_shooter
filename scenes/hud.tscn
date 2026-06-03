@@ -73,10 +73,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -210.0
-offset_top = 26.0
-offset_right = 210.0
-offset_bottom = 96.0
+offset_top = 20.0
 grow_horizontal = 2
 theme_override_constants/separation = 6
 
@@ -164,3 +161,16 @@ theme_override_styles/background = SubResource("StyleBoxFlat_uo2fv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_047uy")
 step = 0.1
 show_percentage = false
+
+[node name="TimerLabel" type="Label" parent="Control" unique_id=668346664]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = 20.0
+offset_right = -20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 40
+text = "Time Left: 4:00"

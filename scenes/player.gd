@@ -209,9 +209,6 @@ func hit_enemy(enemy: CharacterBody3D, impact_position: Vector3, hit_damage: int
 func get_hit(hit_damage: int):
 	current_health -= hit_damage
 	health_changed.emit(current_health, max_health)
-	print("Player hit for: " + str(hit_damage))
-	if current_health <= 0:
-		die()
 
 func heal_up(amount: int):
 	current_health += amount
@@ -219,6 +216,3 @@ func heal_up(amount: int):
 		current_health = max_health
 	health_changed.emit(current_health, max_health)
 	print("Player health: %s/%s" % [current_health, max_health])
-
-func die():
-	print("player dead")

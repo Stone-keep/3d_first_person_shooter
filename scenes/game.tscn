@@ -52,9 +52,12 @@ volumetric_fog_anisotropy = 0.62
 adjustment_enabled = true
 adjustment_saturation = 1.08
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_vtaks"]
+size = Vector3(250, 1, 250)
+
 [node name="Game" type="Node3D" unique_id=1158255392]
 script = ExtResource("1_lbhrr")
-half_day_time = 150.0
+half_day_time = 120.0
 
 [node name="HUD" parent="." unique_id=429791386 instance=ExtResource("1_lnu2h")]
 
@@ -89,7 +92,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.796635, 2.716185, 35.53387
 transform = Transform3D(0.76531476, 0, -0.6436562, 0, 1, 0, 0.6436562, 0, 0.76531476, 38.843277, 1.9574575, 30.75005)
 
 [node name="Enemy6" parent="Characters" unique_id=1869918565 instance=ExtResource("2_yqjtg")]
-transform = Transform3D(0.20112921, 0, 0.9795647, 0, 1, 0, -0.9795647, 0, 0.20112921, 52.16978, 0.5588956, -7.948558)
+transform = Transform3D(0.9281744, 0, 0.3721456, 0, 1, 0, -0.3721456, 0, 0.9281744, 41.95963, 3.298376, -3.1959176)
 
 [node name="Enemy7" parent="Characters" unique_id=960835441 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(0.25397736, 0, 0.9672102, 0, 1, 0, -0.9672102, 0, 0.25397736, 54.659397, 0, -13.168144)
@@ -101,24 +104,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.93774, 8.0412855, 59.89040
 transform = Transform3D(0.47295067, 0, -0.881089, 0, 1, 0, 0.881089, 0, 0.47295067, 7.170933, 4.971527, 63.39465)
 
 [node name="Enemy10" parent="Characters" unique_id=397139771 instance=ExtResource("2_yqjtg")]
-transform = Transform3D(-0.9988442, 0, -0.048065405, 0, 1, 0, 0.048065405, 0, -0.9988442, -12.4305, 5.5466013, 55.071247)
+transform = Transform3D(-0.11836922, 0, -0.99296963, 0, 1, 0, 0.99296963, 0, -0.11836922, -20.063328, 5.989629, 61.94136)
 
-[node name="Enemy11" parent="Characters" unique_id=1428710742 instance=ExtResource("2_yqjtg")]
+[node name="Enemy11" parent="Characters" unique_id=2057805855 instance=ExtResource("2_yqjtg")]
+transform = Transform3D(-0.98748, 0, 0.15774447, 0, 1, 0, -0.15774447, 0, -0.98748, -33.012413, 2.691966, 50.931213)
+
+[node name="EnemyWinCon01" parent="Characters" unique_id=1428710742 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.9945036, 0, 0.10470206, 0, 1, 0, -0.10470206, 0, -0.9945036, -42.526962, 4.6229606, 12.574052)
 
-[node name="Enemy12" parent="Characters" unique_id=1156788697 instance=ExtResource("2_yqjtg")]
-transform = Transform3D(-0.66951966, 0, -0.74279433, 0, 1, 0, 0.74279433, 0, -0.66951966, -54.3893, 1.2815671, 13.028919)
-
-[node name="Enemy13" parent="Characters" unique_id=654601256 instance=ExtResource("2_yqjtg")]
+[node name="EnemyWinCon02" parent="Characters" unique_id=654601256 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.7332078, 0, 0.68000466, 0, 1, 0, -0.68000466, 0, -0.7332078, -32.599934, 2.0545888, 11.137186)
 
-[node name="Enemy14" parent="Characters" unique_id=2057805855 instance=ExtResource("2_yqjtg")]
-transform = Transform3D(0.4897477, 0, -0.8718642, 0, 1, 0, 0.8718642, 0, 0.4897477, -44.673767, 2.691966, 67.60117)
+[node name="EnemyWinCon03" parent="Characters" unique_id=1156788697 instance=ExtResource("2_yqjtg")]
+transform = Transform3D(-0.66951966, 0, -0.74279433, 0, 1, 0, 0.74279433, 0, -0.66951966, -54.3893, 1.2815671, 13.028919)
 
 [node name="Level" type="Node3D" parent="." unique_id=198287855]
 
+[node name="DeathZone" type="Area3D" parent="Level" unique_id=373721836]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/DeathZone" unique_id=1521804920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.954292, -16.18261, 14.505463)
+shape = SubResource("BoxShape3D_vtaks")
+
 [node name="WallLow8" parent="Level" unique_id=995416494 instance=ExtResource("8_vtaks")]
-transform = Transform3D(1.7512506, -0.8954164, -0.3624266, 0.91633016, 1.7773588, 0.036551937, 0.30571645, -0.198057, 1.966548, 62.045834, 1.7424443, 9.044966)
+transform = Transform3D(1.7512506, -0.8954164, -0.3624266, 0.91633016, 1.7773588, 0.036551937, 0.30571645, -0.198057, 1.966548, 61.57539, 0.8237493, 9.044966)
 
 [node name="PlatformLarge" parent="Level" unique_id=2059513620 instance=ExtResource("4_lbhrr")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.14341903, -2.7886484, 2.142932)
@@ -223,7 +234,7 @@ transform = Transform3D(4.433643, 2.2284067, -0.61401474, 0, -1.3282014, -4.8203
 transform = Transform3D(2.8751748, -0.6224829, 0.5881154, 0.7178646, 2.8753016, -0.4661682, -0.46694246, 0.58750075, 2.9046185, 10.447134, -0.31145954, 58.473686)
 
 [node name="WallHigh12" parent="Level" unique_id=1991363156 instance=ExtResource("6_gee14")]
-transform = Transform3D(1.3771118, 0.081880674, 0.7852616, 0.057668116, 1.4603143, -0.45049253, -0.5918078, 0.3328317, 1.7833725, 65.87642, 1.7551694, 8.694904)
+transform = Transform3D(1.3771118, 0.081880674, 0.7852616, 0.057668116, 1.4603143, -0.45049253, -0.5918078, 0.3328317, 1.7833725, 65.405975, 0.8364744, 8.694904)
 
 [node name="WallLow9" parent="Level" unique_id=713791551 instance=ExtResource("8_vtaks")]
 transform = Transform3D(4, 0, 0, 0, 1.9269154, 0.53572124, 0, -0.53572124, 1.9269154, -2.5094733, -0.88505507, 63.459213)
@@ -315,7 +326,15 @@ transform = Transform3D(1.5704978, 0.46438006, 0.9632696, -0.39585158, 1.8423765
 [node name="Pickups" type="Node3D" parent="." unique_id=32930930]
 
 [node name="HeartPickup" parent="Pickups" unique_id=1418570969 instance=ExtResource("10_vtaks")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.13222, 5.3160405, 9.345845)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.433655, 4.3973455, 9.345845)
 
 [node name="HeartPickup2" parent="Pickups" unique_id=1636430508 instance=ExtResource("10_vtaks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.71573, 2.8682668, 81.697914)
+
+[node name="GameTimer" type="Timer" parent="." unique_id=725503690]
+wait_time = 240.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="Level/DeathZone" to="." method="_on_death_zone_body_entered"]
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
