@@ -18,7 +18,7 @@ var max_pitch := 1.4
 
 # Movement
 const WALK_SPEED := 3.0
-const RUN_SPEED := 6.0
+const RUN_SPEED := 5.0
 const FRICTION := 8.0
 var direction := Vector3.ZERO
 var is_running := false
@@ -197,6 +197,8 @@ func get_hit(hit_damage: int):
 
 func heal_up(amount: int):
 	current_health += amount
+	if current_health > max_health:
+		current_health = max_health
 	health_changed.emit(current_health, max_health)
 	print("Player health: %s/%s" % [current_health, max_health])
 

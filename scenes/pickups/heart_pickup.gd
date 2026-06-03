@@ -19,5 +19,6 @@ func animate():
 
 func _on_body_entered(player: Node3D) -> void:
 	if player.is_in_group("player"):
-		player.heal_up(heal_amount)
-		call_deferred("queue_free")
+		if player.current_health < player.max_health:
+			player.heal_up(heal_amount)
+			call_deferred("queue_free")
