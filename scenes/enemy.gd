@@ -14,6 +14,8 @@ extends CharacterBody3D
 @onready var model: Node3D = $Model
 @onready var shoot_sound_player: AudioStreamPlayer3D = $ShootSound
 
+signal died(enemy: CharacterBody3D)
+
 enum EnemyState {
 	IDLE,
 	ATTACKING,
@@ -91,6 +93,7 @@ func enter_state(new_state: EnemyState) -> void:
 
 		EnemyState.DYING:
 			player.enemies_killed += 1
+			died.emit(self)
 			player = null
 			shoot_timer.stop()
 			die_animation()

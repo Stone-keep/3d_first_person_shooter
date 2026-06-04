@@ -6,11 +6,11 @@ var current_track := 0
 
 # Score
 
-var last_level_won = true
-var last_loss_cause = LossCause.VICTORY
-var final_enemies_killed = 11
-var final_health_left = 33
-var final_time_left = 153
+var last_level_won: bool
+var last_loss_cause: LossCause
+var final_enemies_killed: int
+var final_health_left: int
+var final_time_left: float
 
 enum LossCause {
 	VICTORY,
@@ -27,19 +27,28 @@ const GAMEPLAY_MUSIC := [
 
 const GAME_OVER_MUSIC := preload("res://audio/music/22. Abandoned Mining Zone.ogg")
 
+var bgm_volume_normal := -10
+var bgm_volume_muted := -60
+
 func _ready() -> void:
 	current_track = randi_range(0, GAMEPLAY_MUSIC.size()-1)
 	play_gameplay_music()
 
 func play_gameplay_music():
 	bgm_player.stop()
+	bgm_player.volume_db = bgm_volume_normal
 	bgm_player.stream = GAMEPLAY_MUSIC[current_track]
 	bgm_player.play()
 
 func play_game_over_music():
 	bgm_player.stop()
+	bgm_player.volume_db = bgm_volume_normal
 	bgm_player.stream = GAME_OVER_MUSIC
 	bgm_player.play()
+
+func fade_out_music(time: float):
+	var tween = create_tween()
+	tween.tween_property(bgm_player, "volume_db", bgm_volume_muted, time)
 
 func _on_background_music_finished() -> void:
 	if not bgm_player.stream == GAME_OVER_MUSIC:

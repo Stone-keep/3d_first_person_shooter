@@ -9,6 +9,8 @@ extends Control
 @onready var fs_text_label: Label = $FinalScoreDropContainer/FinalScoreLabel
 @onready var fs_score_label: Label = $FinalScoreDropContainer/FinalScoreScore
 
+@onready var restart_button: Button = $ButtonContainer/RestartButton
+
 
 # Score
 var enemies_killed_score: int
@@ -20,17 +22,22 @@ var fs_text_landing_position: Vector2
 var fs_score_landing_position: Vector2
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	restart_button.grab_focus()
+	Global.play_game_over_music()
+
+	await get_tree().process_frame
+	count_score()
+	update_game_over_label()
+	setup_final_score_labels()
+	update_score_animation()
+
+func count_score() -> void:
 	enemies_killed_score = Global.final_enemies_killed * 1000
 	health_left_score = Global.final_health_left * 150
 	time_left_score = floori(Global.final_time_left) * 50
 	level_passed_score = 5000 if Global.last_level_won else 0
 	final_score = enemies_killed_score + health_left_score + time_left_score + level_passed_score
-	Global.play_game_over_music()
-	await get_tree().process_frame
-	update_game_over_label()
-	setup_final_score_labels()
-	update_score_animation()
-
 
 func update_game_over_label():
 	match Global.last_loss_cause:
@@ -123,3 +130,20 @@ func format_score(value: int) -> String:
 
 func wait(time: float) -> void:
 	await get_tree().create_timer(time).timeout
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.echo:
+		return
+
+	if event.is_action_pressed("jump"):
+		var viewport := get_viewport()
+		var focused_control := viewport.gui_get_focus_owner()
+		if focused_control is Button:
+			viewport.set_input_as_handled()
+			focused_control.pressed.emit()
+
+func _on_restart_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+func _on_exit_button_pressed() -> void:
+	get_tree().quit()

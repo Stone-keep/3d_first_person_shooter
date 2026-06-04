@@ -7,3 +7,4 @@ Learning Godot using this tutorial by Clear Code: https://www.patreon.com/collec
 * 30 Sci-fi Space Tracks Music Pack by alkakrab. CC0 license. Source: https://alkakrab.itch.io/sci-fi-music-pack-vol-3
 * Pickup Heart by Quaternius. CC0 license. Source: https://poly.pizza/m/Zj4GUkxCG9
 * Pixel Portals by Nojoule. CC0 license. Source: https://nojoule.itch.io/pixel-portals
+* Space Backdrop by beren77. CC0 license. Source: https://opengameart.org/content/space-backdrop

@@ -59,7 +59,7 @@ size = Vector3(250, 1, 250)
 [node name="Game" type="Node3D" unique_id=1158255392]
 script = ExtResource("1_lbhrr")
 portal_scene = ExtResource("2_kvpfn")
-half_day_time = 120.0
+half_day_time = 120
 
 [node name="HUD" parent="." unique_id=429791386 instance=ExtResource("1_lnu2h")]
 
@@ -76,7 +76,7 @@ shadow_enabled = true
 [node name="Characters" type="Node3D" parent="." unique_id=28782440]
 
 [node name="Player" parent="Characters" unique_id=1309102338 instance=ExtResource("1_uwrxv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7786157, 6.012886)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.717495, 3.0511844, 13.37582)
 
 [node name="Enemies" type="Node3D" parent="Characters" unique_id=1026006573]
 
@@ -113,15 +113,15 @@ transform = Transform3D(-0.11836922, 0, -0.99296963, 0, 1, 0, 0.99296963, 0, -0.
 [node name="Enemy11" parent="Characters/Enemies" unique_id=1485240825 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.98748, 0, 0.15774447, 0, 1, 0, -0.15774447, 0, -0.98748, -33.012413, 2.691966, 50.931213)
 
-[node name="WinConEnemies" type="Node3D" parent="Characters/Enemies" unique_id=714122343]
+[node name="FinalEncounterEnemies" type="Node3D" parent="Characters/Enemies" unique_id=714122343]
 
-[node name="EnemyWinCon01" parent="Characters/Enemies/WinConEnemies" unique_id=1461771935 instance=ExtResource("2_yqjtg")]
+[node name="Enemy" parent="Characters/Enemies/FinalEncounterEnemies" unique_id=1461771935 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.9945036, 0, 0.10470206, 0, 1, 0, -0.10470206, 0, -0.9945036, -42.526962, 4.6229606, 12.574052)
 
-[node name="EnemyWinCon02" parent="Characters/Enemies/WinConEnemies" unique_id=234467960 instance=ExtResource("2_yqjtg")]
+[node name="Enemy2" parent="Characters/Enemies/FinalEncounterEnemies" unique_id=234467960 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.7332078, 0, 0.68000466, 0, 1, 0, -0.68000466, 0, -0.7332078, -32.599934, 2.0545888, 11.137186)
 
-[node name="EnemyWinCon03" parent="Characters/Enemies/WinConEnemies" unique_id=486518352 instance=ExtResource("2_yqjtg")]
+[node name="Enemy3" parent="Characters/Enemies/FinalEncounterEnemies" unique_id=486518352 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.66951966, 0, -0.74279433, 0, 1, 0, 0.74279433, 0, -0.66951966, -54.3893, 1.2815671, 13.028919)
 
 [node name="Level" type="Node3D" parent="." unique_id=198287855]

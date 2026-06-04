@@ -28,3 +28,8 @@ func play_run_sound():
 func stop_walk_and_run_sound():
 	walk_player.stop()
 	run_player.stop()
+
+func stop_all_sounds():
+	for child in get_tree().get_children():
+		if child is AudioStreamPlayer:
+			child.stop()

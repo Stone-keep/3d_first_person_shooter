@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var player_hp_green: CompressedTexture2D
 @export var player_hp_red: CompressedTexture2D
 
+@onready var control: Control = $Control
 @onready var player_hp_bar: TextureProgressBar = $Control/PlayerInfo/PlayerHealthBackground/PlayerHealthBar
 @onready var ammo_label: Label = $Control/PlayerInfo/AmmoLabel
 @onready var reload_container: VBoxContainer = $Control/Reload
@@ -11,6 +12,7 @@ extends CanvasLayer
 @onready var enemy_name_label: Label = $Control/EnemyInfo/EnemyNameLabel
 @onready var enemy_health_bar: ProgressBar = $Control/EnemyInfo/EnemyHealthBar
 @onready var timer_label: Label = $Control/TimerLabel
+@onready var fade_rect: ColorRect = $Control/FadeRect
 
 func update_player_current_hp(current_health: int, max_health: int):
 	player_hp_bar.max_value = max_health
@@ -63,3 +65,16 @@ func update_timer_label(time_left: float):
 		timer_label.add_theme_color_override("font_color", Color.ORANGE)
 	else:
 		timer_label.add_theme_color_override("font_color", Color.WHITE)
+
+func transition_to_game_over(color: Color):
+	for child in control.get_children():
+		child.hide()
+
+	fade_rect.color = Color(color.r, color.g, color.b, 0.0)
+	fade_rect.show()
+
+	Global.fade_out_music(1.5)
+
+	var tween = create_tween()
+	tween.tween_property(fade_rect, "color:a", 1.3, 2.0)
+	await tween.finished
