@@ -11,6 +11,8 @@ extends Control
 
 @onready var restart_button: Button = $ButtonContainer/RestartButton
 
+@onready var score_tick: AudioStreamPlayer = $Sounds/ScoreTick
+@onready var final_score_thump: AudioStreamPlayer = $Sounds/FinalScoreThump
 
 # Score
 var enemies_killed_score: int
@@ -27,12 +29,12 @@ func _ready() -> void:
 	Global.play_game_over_music()
 
 	await get_tree().process_frame
-	count_score()
+	count_scores()
 	update_game_over_label()
 	setup_final_score_labels()
 	update_score_animation()
 
-func count_score() -> void:
+func count_scores() -> void:
 	enemies_killed_score = Global.final_enemies_killed * 1000
 	health_left_score = Global.final_health_left * 150
 	time_left_score = floori(Global.final_time_left) * 50
@@ -56,23 +58,21 @@ func update_game_over_label():
 
 func update_score_animation():
 	await wait(1.5)
-
-	await count_score_animation(ek_score_label, 0, enemies_killed_score, 2.0)
-
-	await wait(0.5)
 	
-	await count_score_animation(hl_score_label, 0, health_left_score, 2.0)
+	await count_if_positive(ek_score_label, enemies_killed_score)
+	await count_if_positive(hl_score_label, health_left_score)
+	await count_if_positive(tl_score_label, time_left_score)
+	await count_if_positive(lp_score_label, level_passed_score)
 
 	await wait(0.5)
-
-	await count_score_animation(tl_score_label, 0, time_left_score, 2.0)
-
-	await wait(0.5)
-
-	await count_score_animation(lp_score_label, 0, level_passed_score, 2.0)
-
-	await wait(1.0)
 	await final_score_slam()
+
+func count_if_positive(label: Label, score: int, duration: float = 2.0, wait_time: float = 0.5) -> void:
+	if score <= 0:
+		return
+
+	await count_score_animation(label, 0, score, duration)
+	await wait(wait_time)
 
 func setup_final_score_labels() -> void:
 	fs_text_landing_position = fs_text_label.position
@@ -88,19 +88,30 @@ func setup_drop_label(label: Label, landing_position: Vector2) -> void:
 	label.hide()
 
 func final_score_slam() -> void:
-	drop_label(fs_text_label, fs_text_landing_position)
+	await drop_label(fs_text_label, fs_text_landing_position)
 	await wait(0.5)
-	var score_tween := drop_label(fs_score_label, fs_score_landing_position)
-	shake_screen(0.5, 15.0)
-	await score_tween.finished
+	await drop_label(fs_score_label, fs_score_landing_position)
 
-func drop_label(label: Label, landing_position: Vector2) -> Tween:
+func drop_label(label: Label, landing_position: Vector2) -> void:
 	label.show()
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(label, "position", landing_position, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(label, "scale", Vector2.ONE, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	return tween
+	var drop_tween := create_tween()
+	drop_tween.set_parallel(true)
+	drop_tween.tween_property(label, "position", landing_position, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	drop_tween.tween_property(label, "scale", Vector2(1.12, 0.9), 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await drop_tween.finished
+
+	play_final_score_thump()
+	shake_screen(0.3, 12.0)
+
+	var settle_tween := create_tween()
+	settle_tween.set_parallel(true)
+	settle_tween.tween_property(label, "position", landing_position, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	settle_tween.tween_property(label, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	await settle_tween.finished
+
+func play_final_score_thump() -> void:
+	final_score_thump.stop()
+	final_score_thump.play()
 
 func shake_screen(duration: float, strength: float) -> void:
 	var original_position := position
@@ -115,6 +126,7 @@ func shake_screen(duration: float, strength: float) -> void:
 	tween.tween_property(self, "position", original_position, step_time)
 
 func count_score_animation(label: Label, from_value: int, to_value: int, duration: float) -> void:
+	score_tick.play()
 	var tween := create_tween()
 	tween.tween_method(
 		func(value: float):
@@ -124,6 +136,7 @@ func count_score_animation(label: Label, from_value: int, to_value: int, duratio
 		duration
 	)
 	await tween.finished
+	score_tick.stop()
 
 func format_score(value: int) -> String:
 	return "%d" % value

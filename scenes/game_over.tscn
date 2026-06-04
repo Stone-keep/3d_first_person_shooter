@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://chdk7pvtgyoyg" path="res://scenes/game_over.gd" id="1_xeevv"]
 [ext_resource type="Texture2D" uid="uid://iomhsprndqn" path="res://graphics/backgrounds/spacefield_a-000.png" id="2_wqhvx"]
+[ext_resource type="AudioStream" uid="uid://odnh1rheif0w" path="res://audio/ui/628638__el_boss__menu-select-tick.wav" id="3_tbwuq"]
+[ext_resource type="AudioStream" uid="uid://cdb8qs2u72an5" path="res://audio/ui/thwack-05.wav" id="4_racf3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0nqlu"]
 content_margin_left = 18.0
@@ -269,6 +271,14 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_xeevv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_wqhvx")
 theme_override_styles/focus = SubResource("StyleBoxFlat_tbwuq")
 text = "Exit"
+
+[node name="Sounds" type="Node" parent="." unique_id=1543621690]
+
+[node name="ScoreTick" type="AudioStreamPlayer" parent="Sounds" unique_id=826661081]
+stream = ExtResource("3_tbwuq")
+
+[node name="FinalScoreThump" type="AudioStreamPlayer" parent="Sounds" unique_id=2037290555]
+stream = ExtResource("4_racf3")
 
 [connection signal="pressed" from="ButtonContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="ButtonContainer/ExitButton" to="." method="_on_exit_button_pressed"]
