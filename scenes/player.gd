@@ -52,6 +52,9 @@ var max_health := 50
 var current_health: int
 signal health_changed(hp_current: int, hp_max: int)
 
+# Stats
+var enemies_killed := 0
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	for weapon in weapons.get_children():

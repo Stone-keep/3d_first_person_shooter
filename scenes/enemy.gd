@@ -90,6 +90,7 @@ func enter_state(new_state: EnemyState) -> void:
 			shoot_timer.start()
 
 		EnemyState.DYING:
+			player.enemies_killed += 1
 			player = null
 			shoot_timer.stop()
 			die_animation()
