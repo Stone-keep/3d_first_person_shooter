@@ -1,5 +1,7 @@
 extends Control
 
+@onready var game_over_label: Label = $GameOverLabel
+@onready var game_over_cause_label: Label = $GameOverCauseLabel
 @onready var ek_score_label: Label = $ScoreContainer/EnemiesKilledScore
 @onready var hl_score_label: Label = $ScoreContainer/HealthLeftScore
 @onready var tl_score_label: Label = $ScoreContainer/TimeLeftScore
@@ -23,12 +25,27 @@ func _ready() -> void:
 	time_left_score = floori(Global.final_time_left) * 50
 	level_passed_score = 5000 if Global.last_level_won else 0
 	final_score = enemies_killed_score + health_left_score + time_left_score + level_passed_score
-
 	Global.play_game_over_music()
 	await get_tree().process_frame
+	update_game_over_label()
 	setup_final_score_labels()
 	update_score_animation()
 
+
+func update_game_over_label():
+	match Global.last_loss_cause:
+		Global.LossCause.VICTORY:
+			game_over_label.text = "Level Passed"
+			game_over_cause_label.text = "Congratulations!"
+		Global.LossCause.HEALTH:
+			game_over_label.text = "Level Failed"
+			game_over_cause_label.text = "You Got Killed By The Enemy"
+		Global.LossCause.FALL:
+			game_over_label.text = "Level Failed"
+			game_over_cause_label.text = "You Fell To Your Death"
+		Global.LossCause.TIMEOUT:
+			game_over_label.text = "Level Failed"
+			game_over_cause_label.text = "You Ran Out Of Time"
 
 func update_score_animation():
 	await wait(1.5)
@@ -67,8 +84,8 @@ func final_score_slam() -> void:
 	drop_label(fs_text_label, fs_text_landing_position)
 	await wait(0.5)
 	var score_tween := drop_label(fs_score_label, fs_score_landing_position)
+	shake_screen(0.5, 15.0)
 	await score_tween.finished
-	await shake_screen(0.3, 12.0)
 
 func drop_label(label: Label, landing_position: Vector2) -> Tween:
 	label.show()
@@ -89,7 +106,6 @@ func shake_screen(duration: float, strength: float) -> void:
 		tween.tween_property(self, "position", original_position + offset, step_time)
 
 	tween.tween_property(self, "position", original_position, step_time)
-	await tween.finished
 
 func count_score_animation(label: Label, from_value: int, to_value: int, duration: float) -> void:
 	var tween := create_tween()

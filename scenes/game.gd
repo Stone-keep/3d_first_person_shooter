@@ -60,29 +60,27 @@ func spawn_portal(location: Vector3) -> void:
 	portal.global_position = location
 	portal.player_entered.connect(_on_portal_player_entered)
 
-func lose_game(cause: String) -> void:
+func lose_game(cause: Global.LossCause) -> void:
 	var final_time := game_timer.time_left
 	game_timer.stop()
 	update_stats(false, player.enemies_killed, player.current_health, final_time, cause)
 	
-
 func win_game() -> void:
 	var final_time := game_timer.time_left
 	game_timer.stop()
 	update_stats(true, player.enemies_killed, player.current_health, final_time)
 
-func update_stats(won: bool, enemies_killed: int, health_left: int, time_left: float, loss_cause: String = ""):
+func update_stats(won: bool, enemies_killed: int, health_left: int, time_left: float, loss_cause: Global.LossCause = Global.LossCause.VICTORY):
 	Global.last_level_won = won
 	Global.final_enemies_killed = enemies_killed
 	Global.final_health_left = health_left
 	Global.final_time_left = time_left
 	Global.last_loss_cause = loss_cause
 
-
 func _on_player_health_changed(hp_current: int, hp_max: int):
 	hud.update_player_current_hp(hp_current, hp_max)
 	if hp_current <= 0:
-		lose_game("health")
+		lose_game(Global.LossCause.HEALTH)
 
 func _on_player_ammo_changed(current_ammo: int, max_ammo: int):
 	hud.update_ammo(current_ammo, max_ammo)
@@ -98,13 +96,10 @@ func _on_player_targeted_enemy_lost():
 
 func _on_death_zone_body_entered(body: Node3D) -> void:
 	if body == player:
-		lose_game("fall")
+		lose_game(Global.LossCause.FALL)
 
 func _on_game_timer_timeout() -> void:
-	lose_game("timeout")
+	lose_game(Global.LossCause.TIMEOUT)
 
 func _on_portal_player_entered() -> void:
 	win_game()
-
-func _on_portal_test_timeout() -> void:
-	spawn_portal(Vector3(-0.127, 0.813, 0.343))

@@ -78,46 +78,50 @@ shadow_enabled = true
 [node name="Player" parent="Characters" unique_id=1309102338 instance=ExtResource("1_uwrxv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7786157, 6.012886)
 
-[node name="Enemy" parent="Characters" unique_id=14247012 instance=ExtResource("2_yqjtg")]
+[node name="Enemies" type="Node3D" parent="Characters" unique_id=1026006573]
+
+[node name="Enemy" parent="Characters/Enemies" unique_id=14247012 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.99767476, 0, 0.06815454, 0, 1, 0, -0.06815454, 0, -0.99767476, 5.217706, 5.7630057, -23.487547)
 
-[node name="Enemy2" parent="Characters" unique_id=1899125799 instance=ExtResource("2_yqjtg")]
+[node name="Enemy2" parent="Characters/Enemies" unique_id=1538313458 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.8195323, 0, -0.57303303, 0, 1, 0, 0.57303303, 0, -0.8195323, 27.718256, 4.8529997, -34.667343)
 
-[node name="Enemy3" parent="Characters" unique_id=1211804013 instance=ExtResource("2_yqjtg")]
+[node name="Enemy3" parent="Characters/Enemies" unique_id=930026089 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.9216804, 0, 0.38795006, 0, 1, 0, -0.38795006, 0, -0.9216804, 20.387846, 4.781441, -31.592405)
 
-[node name="Enemy4" parent="Characters" unique_id=948810766 instance=ExtResource("2_yqjtg")]
+[node name="Enemy4" parent="Characters/Enemies" unique_id=516278885 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.796635, 2.716185, 35.533875)
 
-[node name="Enemy5" parent="Characters" unique_id=830122227 instance=ExtResource("2_yqjtg")]
+[node name="Enemy5" parent="Characters/Enemies" unique_id=227627015 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(0.76531476, 0, -0.6436562, 0, 1, 0, 0.6436562, 0, 0.76531476, 38.843277, 1.9574575, 30.75005)
 
-[node name="Enemy6" parent="Characters" unique_id=1869918565 instance=ExtResource("2_yqjtg")]
+[node name="Enemy6" parent="Characters/Enemies" unique_id=573773857 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(0.9281744, 0, 0.3721456, 0, 1, 0, -0.3721456, 0, 0.9281744, 41.95963, 3.298376, -3.1959176)
 
-[node name="Enemy7" parent="Characters" unique_id=960835441 instance=ExtResource("2_yqjtg")]
+[node name="Enemy7" parent="Characters/Enemies" unique_id=979271071 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(0.25397736, 0, 0.9672102, 0, 1, 0, -0.9672102, 0, 0.25397736, 54.659397, 0, -13.168144)
 
-[node name="Enemy8" parent="Characters" unique_id=1761198835 instance=ExtResource("2_yqjtg")]
+[node name="Enemy8" parent="Characters/Enemies" unique_id=619175594 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.93774, 8.0412855, 59.890404)
 
-[node name="Enemy9" parent="Characters" unique_id=1526879963 instance=ExtResource("2_yqjtg")]
+[node name="Enemy9" parent="Characters/Enemies" unique_id=1631413210 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(0.47295067, 0, -0.881089, 0, 1, 0, 0.881089, 0, 0.47295067, 7.170933, 4.971527, 63.39465)
 
-[node name="Enemy10" parent="Characters" unique_id=397139771 instance=ExtResource("2_yqjtg")]
+[node name="Enemy10" parent="Characters/Enemies" unique_id=431259069 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.11836922, 0, -0.99296963, 0, 1, 0, 0.99296963, 0, -0.11836922, -20.063328, 5.989629, 61.94136)
 
-[node name="Enemy11" parent="Characters" unique_id=2057805855 instance=ExtResource("2_yqjtg")]
+[node name="Enemy11" parent="Characters/Enemies" unique_id=1485240825 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.98748, 0, 0.15774447, 0, 1, 0, -0.15774447, 0, -0.98748, -33.012413, 2.691966, 50.931213)
 
-[node name="EnemyWinCon01" parent="Characters" unique_id=1428710742 instance=ExtResource("2_yqjtg")]
+[node name="WinConEnemies" type="Node3D" parent="Characters/Enemies" unique_id=714122343]
+
+[node name="EnemyWinCon01" parent="Characters/Enemies/WinConEnemies" unique_id=1461771935 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.9945036, 0, 0.10470206, 0, 1, 0, -0.10470206, 0, -0.9945036, -42.526962, 4.6229606, 12.574052)
 
-[node name="EnemyWinCon02" parent="Characters" unique_id=654601256 instance=ExtResource("2_yqjtg")]
+[node name="EnemyWinCon02" parent="Characters/Enemies/WinConEnemies" unique_id=234467960 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.7332078, 0, 0.68000466, 0, 1, 0, -0.68000466, 0, -0.7332078, -32.599934, 2.0545888, 11.137186)
 
-[node name="EnemyWinCon03" parent="Characters" unique_id=1156788697 instance=ExtResource("2_yqjtg")]
+[node name="EnemyWinCon03" parent="Characters/Enemies/WinConEnemies" unique_id=486518352 instance=ExtResource("2_yqjtg")]
 transform = Transform3D(-0.66951966, 0, -0.74279433, 0, 1, 0, 0.74279433, 0, -0.66951966, -54.3893, 1.2815671, 13.028919)
 
 [node name="Level" type="Node3D" parent="." unique_id=198287855]
@@ -338,11 +342,5 @@ wait_time = 240.0
 one_shot = true
 autostart = true
 
-[node name="PortalTest" type="Timer" parent="." unique_id=16197963]
-wait_time = 3.0
-one_shot = true
-autostart = true
-
 [connection signal="body_entered" from="Level/DeathZone" to="." method="_on_death_zone_body_entered"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
-[connection signal="timeout" from="PortalTest" to="." method="_on_portal_test_timeout"]

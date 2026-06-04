@@ -7,10 +7,17 @@ var current_track := 0
 # Score
 
 var last_level_won = true
-var last_loss_cause: String
+var last_loss_cause = LossCause.VICTORY
 var final_enemies_killed = 11
 var final_health_left = 33
 var final_time_left = 153
+
+enum LossCause {
+	VICTORY,
+	HEALTH,
+	FALL,
+	TIMEOUT
+}
 
 const GAMEPLAY_MUSIC := [
 	preload("res://audio/music/5. Beyond the Star Gate.ogg"),
@@ -18,7 +25,7 @@ const GAMEPLAY_MUSIC := [
 	preload("res://audio/music/15. Collapse of the Core.ogg")
 ]
 
-const GAME_OVER_MUSIC := preload("res://audio/music/25. Signals Across.ogg")
+const GAME_OVER_MUSIC := preload("res://audio/music/22. Abandoned Mining Zone.ogg")
 
 func _ready() -> void:
 	current_track = randi_range(0, GAMEPLAY_MUSIC.size()-1)
