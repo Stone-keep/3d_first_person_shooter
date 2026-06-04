@@ -30,6 +30,6 @@ func stop_walk_and_run_sound():
 	run_player.stop()
 
 func stop_all_sounds():
-	for child in get_tree().get_children():
-		if child is AudioStreamPlayer:
+	for child in get_children():
+		if child is AudioStreamPlayer or child is AudioStreamPlayer2D or child is AudioStreamPlayer3D:
 			child.stop()

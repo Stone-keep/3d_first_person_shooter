@@ -54,7 +54,7 @@ func reload_progress(max_ammo: int, time: float):
 
 func update_timer_label(time_left: float):
 	var total_seconds = ceili(time_left)
-	var minutes = total_seconds / 60
+	var minutes = floori(total_seconds / 60.0)
 	var seconds = total_seconds % 60
 	timer_label.text = "Time Left: %02d:%02d" % [minutes, seconds]
 	if total_seconds <= 10:
