@@ -214,8 +214,5 @@ func get_hit(hit_damage: int):
 	health_changed.emit(current_health, max_health)
 
 func heal_up(amount: int):
-	current_health += amount
-	if current_health > max_health:
-		current_health = max_health
+	current_health = clampi(current_health + amount, 0, max_health)
 	health_changed.emit(current_health, max_health)
-	print("Player health: %s/%s" % [current_health, max_health])

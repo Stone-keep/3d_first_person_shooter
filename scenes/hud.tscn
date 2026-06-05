@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cvhwgxsjqkicq" path="res://sprites/health_bar_empty_simple.png" id="3_5ysmq"]
 [ext_resource type="Texture2D" uid="uid://c7e8kv5o6sykr" path="res://sprites/health_bar_progress_red.png" id="3_uo2fv"]
 [ext_resource type="Texture2D" uid="uid://bwqfotxe6i73w" path="res://sprites/health_bar_progress_green.png" id="4_6fi6k"]
+[ext_resource type="Theme" path="res://themes/main_theme.tres" id="6_047uy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enemy_bg"]
 bg_color = Color(0.02745098, 0.03137255, 0.02745098, 0.78)
@@ -174,6 +175,28 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 40
 text = "Time Left: 4:00"
+
+[node name="FinalEncounterMessage" type="Label" parent="Control" unique_id=1338842665]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.289
+anchor_right = 0.5
+anchor_bottom = 0.289
+offset_left = -202.0
+offset_top = -66.5
+offset_right = 202.0
+offset_bottom = 66.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_047uy")
+theme_override_colors/font_color = Color(1, 1, 1, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 50
+text = "Destroy All Enemies
+To Open The Portal!"
 
 [node name="FadeRect" type="ColorRect" parent="Control" unique_id=1125399725]
 visible = false

@@ -12,6 +12,7 @@ extends CanvasLayer
 @onready var enemy_name_label: Label = $Control/EnemyInfo/EnemyNameLabel
 @onready var enemy_health_bar: ProgressBar = $Control/EnemyInfo/EnemyHealthBar
 @onready var timer_label: Label = $Control/TimerLabel
+@onready var final_encounter_message = $Control/FinalEncounterMessage
 @onready var fade_rect: ColorRect = $Control/FadeRect
 
 func update_player_current_hp(current_health: int, max_health: int):
@@ -78,3 +79,22 @@ func transition_to_game_over(color: Color):
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "color:a", 1.3, 2.0)
 	await tween.finished
+
+func display_final_encounter_message():
+	final_encounter_message.show()
+
+	var tween = create_tween()
+
+	tween.tween_property(final_encounter_message, "theme_override_colors/font_color", Color.WHITE, 0.5).from(Color(1.0, 1.0, 1.0, 0.0))
+	tween.parallel().tween_property(final_encounter_message, "theme_override_colors/font_outline_color", Color.BLACK, 0.5).from(Color(0.0, 0.0, 0.0, 0.0))
+
+	for i in range(5):
+
+		tween.tween_property(final_encounter_message, "theme_override_colors/font_color", Color.RED, 0.2)
+		tween.tween_property(final_encounter_message, "theme_override_colors/font_color", Color.WHITE, 0.2)
+
+	tween.tween_property(final_encounter_message, "theme_override_colors/font_color", Color(1.0, 1.0, 1.0, 0.0), 0.5)
+	tween.parallel().tween_property(final_encounter_message, "theme_override_colors/font_outline_color", Color(0.0, 0.0, 0.0, 0.0), 0.5)
+
+	await tween.finished
+	final_encounter_message.hide()

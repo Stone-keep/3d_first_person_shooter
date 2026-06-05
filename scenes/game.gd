@@ -14,7 +14,7 @@ extends Node3D
 @onready var sun: DirectionalLight3D = $Sun
 @onready var sky_material: ProceduralSkyMaterial = enviornement.environment.sky.sky_material
 
-var final_portal_position := Vector3(-45.3, 0.7, 8.73)
+var final_portal_position := Vector3(-50.1, 0.86, 2.0)
 var final_encounter_enemies_left: int
 
 func _ready() -> void:
@@ -137,4 +137,11 @@ func _on_portal_player_entered() -> void:
 func _on_final_encounter_enemy_died(_enemy: CharacterBody3D) -> void:
 	final_encounter_enemies_left -= 1
 	if final_encounter_enemies_left <= 0:
+		await get_tree().create_timer(1.0).timeout
 		spawn_portal(final_portal_position)
+
+
+func _on_final_encounter_area_body_entered(body: Node3D) -> void:
+	if body == player:
+		print(body)
+		hud.display_final_encounter_message()

@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bfrltkbdpgvwu" path="res://scenes/portal.gd" id="1_1ffj6"]
 [ext_resource type="Shader" uid="uid://bqpv4y7x6y0wa" path="res://shaders/pixel_portals/pixel_portal.gdshader" id="1_v0xau"]
-[ext_resource type="AudioStream" uid="uid://bv5l7vpwvhoy5" path="res://audio/weapons/Energy_Impulse_04.wav" id="3_jr6l0"]
+[ext_resource type="AudioStream" uid="uid://cbb8222n8gjpe" path="res://audio/dragon-studio-sci-fi-portal-jump-02-416162.mp3" id="3_d4jfq"]
+[ext_resource type="AudioStream" uid="uid://wbcfesi7f82a" path="res://audio/movingshield_sound.ogg" id="4_d4jfq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ppl40"]
 render_priority = 0
@@ -70,7 +71,12 @@ omni_range = 8.0
 shape = SubResource("BoxShape3D_v0xau")
 
 [node name="OpeningSound" type="AudioStreamPlayer3D" parent="." unique_id=1785577574]
-stream = ExtResource("3_jr6l0")
-unit_size = 24.9
+stream = ExtResource("3_d4jfq")
+volume_db = -15.0
+unit_size = 20.0
+
+[node name="BuzzSound" type="AudioStreamPlayer3D" parent="." unique_id=1537276520]
+stream = ExtResource("4_d4jfq")
+unit_size = 20.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
