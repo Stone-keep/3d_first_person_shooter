@@ -8,6 +8,8 @@ extends Control
 @onready var lp_score_label: Label = $ScoreContainer/LevelPassedScore
 @onready var fs_text_label: Label = $FinalScoreDropContainer/FinalScoreLabel
 @onready var fs_score_label: Label = $FinalScoreDropContainer/FinalScoreScore
+@onready var hs_text_label: Label = $HighScoreDropContainer/HighScoreLabel
+@onready var hs_score_label: Label = $HighScoreDropContainer/HighScoreScore
 
 @onready var restart_button: Button = $ButtonContainer/RestartButton
 
@@ -22,6 +24,8 @@ var level_passed_score: int
 var final_score: int
 var fs_text_landing_position: Vector2
 var fs_score_landing_position: Vector2
+var hs_text_landing_position: Vector2
+var hs_score_landing_position: Vector2
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -30,8 +34,9 @@ func _ready() -> void:
 
 	await get_tree().process_frame
 	count_scores()
+	Global.submit_high_score(final_score)
 	update_game_over_label()
-	setup_final_score_labels()
+	setup_score_drop_labels()
 	update_score_animation()
 
 func count_scores() -> void:
@@ -48,13 +53,13 @@ func update_game_over_label():
 			game_over_cause_label.text = "Congratulations!"
 		Global.LossCause.HEALTH:
 			game_over_label.text = "Level Failed"
-			game_over_cause_label.text = "You Got Killed By The Enemy"
+			game_over_cause_label.text = "You died under the barrage of enemy lasers"
 		Global.LossCause.FALL:
 			game_over_label.text = "Level Failed"
-			game_over_cause_label.text = "You Fell To Your Death"
+			game_over_cause_label.text = "You fell into the endless abyss"
 		Global.LossCause.TIMEOUT:
 			game_over_label.text = "Level Failed"
-			game_over_cause_label.text = "You Ran Out Of Time"
+			game_over_cause_label.text = "You took too long and the planet's scorching sun burned you"
 
 func update_score_animation():
 	await wait(1.5)
@@ -66,6 +71,8 @@ func update_score_animation():
 
 	await wait(0.5)
 	await final_score_slam()
+	await wait(1.5)
+	await high_score_slam()
 
 func count_if_positive(label: Label, score: int, duration: float = 2.0, wait_time: float = 0.5) -> void:
 	if score <= 0:
@@ -74,12 +81,18 @@ func count_if_positive(label: Label, score: int, duration: float = 2.0, wait_tim
 	await count_score_animation(label, 0, score, duration)
 	await wait(wait_time)
 
-func setup_final_score_labels() -> void:
+func setup_score_drop_labels() -> void:
 	fs_text_landing_position = fs_text_label.position
 	fs_score_landing_position = fs_score_label.position
 	fs_score_label.text = format_score(final_score)
 	setup_drop_label(fs_text_label, fs_text_landing_position)
 	setup_drop_label(fs_score_label, fs_score_landing_position)
+
+	hs_text_landing_position = hs_text_label.position
+	hs_score_landing_position = hs_score_label.position
+	hs_score_label.text = format_score(Global.high_score)
+	setup_drop_label(hs_text_label, hs_text_landing_position)
+	setup_drop_label(hs_score_label, hs_score_landing_position)
 
 func setup_drop_label(label: Label, landing_position: Vector2) -> void:
 	label.pivot_offset = label.size / 2.0
@@ -91,6 +104,11 @@ func final_score_slam() -> void:
 	await drop_label(fs_text_label, fs_text_landing_position)
 	await wait(0.5)
 	await drop_label(fs_score_label, fs_score_landing_position)
+
+func high_score_slam() -> void:
+	await drop_label(hs_text_label, hs_text_landing_position)
+	await wait(0.5)
+	await drop_label(hs_score_label, hs_score_landing_position)
 
 func drop_label(label: Label, landing_position: Vector2) -> void:
 	label.show()
